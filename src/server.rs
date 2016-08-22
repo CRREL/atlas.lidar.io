@@ -9,7 +9,8 @@ use Result;
 use config::Config;
 use handler::Index;
 
-#[derive(Debug)]
+/// HTTP server.
+#[derive(Clone, Copy, Debug)]
 pub struct Server {
     addr: SocketAddr,
 }

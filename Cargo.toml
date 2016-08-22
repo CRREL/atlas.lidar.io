@@ -8,3 +8,7 @@ docopt = "*"
 iron = "*"
 rustc-serialize = "*"
 toml = "*"
+
+[[bin]]
+name = "atlas-lidar-io"
+doc = false
