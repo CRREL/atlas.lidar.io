@@ -3,8 +3,6 @@ extern crate docopt;
 extern crate rustc_serialize;
 extern crate toml;
 
-use std::path::PathBuf;
-
 use docopt::Docopt;
 
 use atlas_lidar_io::Server;
@@ -22,7 +20,7 @@ Options:
 
 #[derive(Debug, RustcDecodable)]
 struct Args {
-    arg_config: PathBuf,
+    arg_config: String,
 }
 
 fn main() {
