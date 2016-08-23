@@ -8,6 +8,8 @@
         unused_import_braces, unused_qualifications)]
 
 extern crate iron;
+extern crate heartbeat;
+extern crate router;
 extern crate rustc_serialize;
 extern crate toml;
 
@@ -29,6 +31,8 @@ pub use server::Server;
 pub enum Error {
     /// Wrapper around `std::io::Error`.
     Io(io::Error),
+    /// Wrapper around `heartbeat::Error`.
+    Heartbeat(heartbeat::Error),
     /// Wrapper around `std::net::AddrParseError`.
     NetAddrParse(AddrParseError),
     /// Wrapper around a vector of `toml::ParserError`.
@@ -40,6 +44,12 @@ pub enum Error {
 impl From<io::Error> for Error {
     fn from(err: io::Error) -> Error {
         Error::Io(err)
+    }
+}
+
+impl From<heartbeat::Error> for Error {
+    fn from(err: heartbeat::Error) -> Error {
+        Error::Heartbeat(err)
     }
 }
 

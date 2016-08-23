@@ -1,18 +1,22 @@
+use std::fmt;
 use std::net::SocketAddr;
 use std::path::Path;
+use std::sync::{Arc, RwLock};
 
+use heartbeat::Source;
 use iron::Listening;
 use iron::error::HttpResult;
 use iron::prelude::*;
+use router::Router;
 
 use Result;
 use config::Config;
 use handler::Index;
 
 /// HTTP server.
-#[derive(Clone, Copy, Debug)]
 pub struct Server {
     addr: SocketAddr,
+    router: Router,
 }
 
 impl Server {
@@ -26,8 +30,23 @@ impl Server {
     /// ```
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Server> {
         let config = try!(Config::from_path(path));
+        Server::new(&config)
+    }
+
+    fn new(config: &Config) -> Result<Server> {
         let ip = try!(config.server.ip.parse());
-        Ok(Server { addr: SocketAddr::new(ip, config.server.port) })
+        let addr = SocketAddr::new(ip, config.server.port);
+
+        let mut source = try!(Source::from_path(&config.heartbeat.directory));
+        let heartbeats = Arc::new(RwLock::new(try!(source.heartbeats())));
+
+        let mut router = Router::new();
+        router.get("/", Index::new(heartbeats));
+
+        Ok(Server {
+            addr: addr,
+            router: router,
+        })
     }
 
     /// Starts the server.
@@ -39,15 +58,14 @@ impl Server {
     /// let server = Server::from_path("data/server.toml").unwrap();
     /// server.serve().unwrap();
     /// ```
-    pub fn serve(&self) -> HttpResult<Listening> {
-        Iron::new(self.chain()).http(self.addr())
+    pub fn serve(self) -> HttpResult<Listening> {
+        let chain = Chain::new(self.router);
+        Iron::new(chain).http(self.addr)
     }
+}
 
-    fn chain(&self) -> Chain {
-        Chain::new(Index)
-    }
-
-    fn addr(&self) -> SocketAddr {
-        self.addr
+impl fmt::Debug for Server {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Server {{ addr: {} }}", self.addr)
     }
 }

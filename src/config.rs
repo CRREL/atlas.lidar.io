@@ -9,7 +9,8 @@ use {Error, Result};
 
 #[derive(Debug, RustcDecodable)]
 pub struct Config {
-    pub server: ServerConfig,
+    pub server: Server,
+    pub heartbeat: Heartbeat,
 }
 
 impl Config {
@@ -29,7 +30,12 @@ impl Config {
 }
 
 #[derive(Debug, RustcDecodable)]
-pub struct ServerConfig {
+pub struct Server {
     pub ip: String,
     pub port: u16,
+}
+
+#[derive(Debug, RustcDecodable)]
+pub struct Heartbeat {
+    pub directory: String,
 }

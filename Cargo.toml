@@ -5,7 +5,9 @@ authors = ["Pete Gadomski <pete.gadomski@gmail.com>"]
 
 [dependencies]
 docopt = "*"
+heartbeat = { git = "https://github.com/glacio/heartbeat.git" }
 iron = "*"
+router = "*"
 rustc-serialize = "*"
 toml = "*"
 
