@@ -8,18 +8,18 @@ watch = ["handlebars-iron/watch"]
 
 [dependencies]
 camera = { git = "https://github.com/glacio/camera.git" }
-chrono = "*"
-docopt = "*"
-handlebars = "*"
-handlebars-iron = "*"
+chrono = "0.2"
+docopt = "0.6"
+handlebars = "0.20"
+handlebars-iron = "0.18"
 heartbeat = { git = "https://github.com/glacio/heartbeat.git" }
-iron = "*"
-mount = "*"
-notify = "*"
-router = "*"
-rustc-serialize = "*"
-staticfile = "*"
-toml = "*"
+iron = "0.4"
+mount = "0.2"
+notify = "2.6"
+router = "0.2"
+rustc-serialize = "0.3"
+staticfile = "0.3"
+toml = "0.2"
 
 [[bin]]
 name = "atlas-lidar-io"
