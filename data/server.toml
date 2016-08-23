@@ -8,3 +8,21 @@ directory = "/Users/gadomski/iridium"
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/ATLAS_CAM"
+
+[[camera]]
+directory = "/Users/gadomski/iridiumcam/ATLAS_CAM2"
+name = "ATLAS_CAM2_StarDot1"
+
+[[camera]]
+directory = "/Users/gadomski/iridiumcam/HEL_DUAL/StarDot1"
+name = "HEL_DUAL_StarDot1"
+url_path = "HEL_DUAL/StarDot1"
+
+[[camera]]
+directory = "/Users/gadomski/iridiumcam/HEL_DUAL/StarDot2"
+name = "HEL_DUAL_StarDot2"
+url_path = "HEL_DUAL/StarDot2"
+
+[[camera]]
+directory = "/Users/gadomski/iridiumcam/HEL_MELANGE"
+name = "Hel_Melange"

@@ -55,6 +55,9 @@ impl Server {
                     if let Some(name) = config.name.as_ref() {
                         c.set_name(name);
                     }
+                    if let Some(url_path) = config.url_path.as_ref() {
+                        c.set_url_path(url_path);
+                    }
                     c
                 })
             })
