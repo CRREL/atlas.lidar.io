@@ -32,6 +32,7 @@ fn watch<P, F>(path: P, mut update: F) -> Result<()>
     }
 }
 
+#[derive(Clone, Debug)]
 pub struct Heartbeat {
     directory: PathBuf,
     source: heartbeat::FilesystemSource,
@@ -40,11 +41,10 @@ pub struct Heartbeat {
 
 impl Heartbeat {
     pub fn new<P: AsRef<Path>>(path: P) -> Result<Heartbeat> {
-        let mut source = try!(heartbeat::Source::from_path(&path));
         Ok(Heartbeat {
             directory: path.as_ref().to_path_buf(),
-            heartbeats: Arc::new(RwLock::new(try!(source.heartbeats()))),
-            source: source,
+            heartbeats: Arc::new(RwLock::new(Vec::new())),
+            source: try!(heartbeat::Source::from_path(&path)),
         })
     }
 
@@ -53,6 +53,7 @@ impl Heartbeat {
     }
 
     pub fn watch(&mut self) -> Result<()> {
+        try!(self.update());
         watch(self.directory.clone(), || self.update())
     }
 

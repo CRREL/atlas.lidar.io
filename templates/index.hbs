@@ -12,8 +12,6 @@
 
       <div class="status-report">
         <ul class="status-report-list">
-          {{li-status status_report.heartbeat "Heartbeat"}}
-          {{li-status status_report.scan "Scan"}}
         </ul>
       </div>
 
@@ -61,42 +59,6 @@
           </dl>
         </div>
         {{/with}}
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12 col-md-10 col-md-offset-1">
-          <h2>Cameras</h2>
-
-          <div id="carousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              {{#each cameras}}
-              <li data-target="#carousel" data-slide-to="{{@index}}" class="{{active}}"></li>
-              {{/each}}
-            </ol>
-
-            <div class="carousel-inner" role="listbox">
-              {{#each cameras}}
-              <div class="item {{active}}">
-                <img src="{{latest_image.url}}" alt="The latest image from the {{name}} camera.">
-                <div class="carousel-caption">
-                  <p>{{name}} at {{latest_image.datetime}}</p>
-                </div>
-              </div>
-              {{/each}}
-            </div>
-
-            <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-
-
-        </div>
       </div>
     </div>
 

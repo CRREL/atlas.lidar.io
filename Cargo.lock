@@ -157,7 +157,7 @@ dependencies = [
 [[package]]
 name = "heartbeat"
 version = "0.1.0"
-source = "git+https://github.com/glacio/heartbeat.git#0f7f35e09e01746c78e74de81bfd91ba6ffc2cd8"
+source = "git+https://github.com/glacio/heartbeat.git#fd202a4e26bbaf0912679bbc9eb48c46c6614095"
 dependencies = [
  "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -483,7 +483,7 @@ dependencies = [
 [[package]]
 name = "sbd"
 version = "0.1.6"
-source = "git+https://github.com/gadomski/sbd-rs.git#d413944913d47f26d04116e8cc1791e7dd9705a3"
+source = "git+https://github.com/gadomski/sbd-rs.git#79f891e24f998dc4c110bf6ab8f1383ebbea2918"
 dependencies = [
  "byteorder 0.3.13 (registry+https://github.com/rust-lang/crates.io-index)",
  "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",

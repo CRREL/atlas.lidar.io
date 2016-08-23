@@ -27,6 +27,7 @@ mod handler;
 mod helper;
 mod server;
 mod watch;
+mod world;
 
 pub use error::Error;
 pub use server::Server;

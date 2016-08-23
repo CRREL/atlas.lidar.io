@@ -1,11 +1,9 @@
 use std::fmt;
 use std::net::SocketAddr;
 use std::path::Path;
-use std::thread;
 #[cfg(feature = "watch")]
 use std::sync::Arc;
 
-use camera::Camera;
 use handlebars_iron::{DirectorySource, HandlebarsEngine};
 #[cfg(feature = "watch")]
 use handlebars_iron::Watchable;
@@ -20,13 +18,13 @@ use Result;
 use config::Config;
 use helper;
 use handler::Index;
-use watch::Heartbeat;
+use world::World;
 
 /// HTTP server.
 pub struct Server {
     addr: SocketAddr,
     chain: Chain,
-    watcher: Heartbeat,
+    world: World,
 }
 
 impl Server {
@@ -40,38 +38,25 @@ impl Server {
     /// ```
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Server> {
         let config = try!(Config::from_path(path));
-        Server::new(&config)
+        Server::new(config)
     }
 
-    fn new(config: &Config) -> Result<Server> {
-        let ip = try!(config.server.ip.parse());
-        let addr = SocketAddr::new(ip, config.server.port);
+    fn new(config: Config) -> Result<Server> {
+        let world = try!(World::new(config.heartbeat, config.camera));
+        let config = config.server;
 
-        let watcher = try!(Heartbeat::new(&config.heartbeat.directory));
-        let cameras = try!(config.camera
-            .iter()
-            .map(|config| {
-                Camera::new(&config.directory).map(|mut c| {
-                    if let Some(name) = config.name.as_ref() {
-                        c.set_name(name);
-                    }
-                    if let Some(url_path) = config.url_path.as_ref() {
-                        c.set_url_path(url_path);
-                    }
-                    c
-                })
-            })
-            .collect());
+        let ip = try!(config.ip.parse());
+        let addr = SocketAddr::new(ip, config.port);
 
         let mut router = Router::new();
-        router.get("/", Index::new(cameras, watcher.heartbeats()));
+        router.get("/", Index::new(world.clone()));
         let mut mount = Mount::new();
-        mount.mount("/static/", Static::new(&config.server.static_directory));
+        mount.mount("/static/", Static::new(&config.static_directory));
         mount.mount("/", router);
         let mut chain = Chain::new(mount);
 
         let mut handlebars_engine = HandlebarsEngine::new();
-        handlebars_engine.add(Box::new(DirectorySource::new(&config.server.template_directory, ".hbs")));
+        handlebars_engine.add(Box::new(DirectorySource::new(&config.template_directory, ".hbs")));
         try!(handlebars_engine.reload());
         {
             let mut registry = handlebars_engine.registry.write().unwrap();
@@ -81,13 +66,13 @@ impl Server {
             registry.register_helper("orion-percentage", Box::new(helper::orion_percentage));
             registry.register_helper("li-status", Box::new(helper::li_status));
         }
-        chain.link_after(maybe_watch_handlebars_engine(&config.server.template_directory,
+        chain.link_after(maybe_watch_handlebars_engine(&config.template_directory,
                                                        handlebars_engine));
 
         Ok(Server {
             addr: addr,
             chain: chain,
-            watcher: watcher,
+            world: world,
         })
     }
 
@@ -101,8 +86,7 @@ impl Server {
     /// server.serve().unwrap();
     /// ```
     pub fn serve(self) -> HttpResult<Listening> {
-        let mut watcher = self.watcher;
-        thread::spawn(move || watcher.watch().unwrap());
+        self.world.serve();
         Iron::new(self.chain).http(self.addr)
     }
 }
