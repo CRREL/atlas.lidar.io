@@ -49,3 +49,13 @@ pub struct Camera {
     pub name: Option<String>,
     pub url_path: Option<String>,
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn reads_from_file() {
+        let _ = Config::from_path("data/server.toml").unwrap();
+    }
+}

@@ -1,3 +1,5 @@
+use std::error;
+use std::fmt;
 use std::io;
 use std::net::AddrParseError;
 
@@ -8,8 +10,6 @@ use notify;
 use toml::{DecodeError, ParserError};
 
 /// Crate-specific error enum.
-///
-/// TODO derive Error.
 #[derive(Debug)]
 pub enum Error {
     /// Wrapper around `camera::Error`.
@@ -69,5 +69,39 @@ impl From<handlebars_iron::SourceError> for Error {
 impl From<camera::Error> for Error {
     fn from(err: camera::Error) -> Error {
         Error::Camera(err)
+    }
+}
+
+impl error::Error for Error {
+    fn description(&self) -> &str {
+        match *self {
+            Error::Camera(ref err) => err.description(),
+            Error::Io(ref err) => err.description(),
+            Error::HandlebarsSource(ref err) => err.description(),
+            Error::Heartbeat(ref err) => err.description(),
+            Error::NetAddrParse(ref err) => err.description(),
+            Error::Notify(ref err) => err.description(),
+            Error::ParseConfig(_) => "configuration parse error",
+            Error::TomlDecode(ref err) => err.description(),
+        }
+    }
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Error::Camera(ref err) => write!(f, "camera error: {}", err),
+            Error::Io(ref err) => write!(f, "io error: {}", err),
+            Error::HandlebarsSource(ref err) => write!(f, "handlebars source error: {}", err),
+            Error::Heartbeat(ref err) => write!(f, "heartbeat error: {}", err),
+            Error::NetAddrParse(ref err) => write!(f, "net addr parse error: {}", err),
+            Error::Notify(ref err) => write!(f, "notify error: {}", err),
+            Error::ParseConfig(ref errors) => {
+                write!(f,
+                       "config parse error(s): {}",
+                       errors.iter().map(|e| e.to_string()).collect::<Vec<String>>().join(", "))
+            }
+            Error::TomlDecode(ref err) => write!(f, "toml decode error: {}", err),
+        }
     }
 }
