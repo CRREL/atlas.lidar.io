@@ -9,11 +9,11 @@
 
 extern crate camera;
 extern crate chrono;
-#[macro_use]
-extern crate iron;
 extern crate handlebars;
 extern crate handlebars_iron;
 extern crate heartbeat;
+#[macro_use]
+extern crate iron;
 extern crate mount;
 extern crate notify;
 extern crate router;
