@@ -7,7 +7,11 @@
         unstable_features,
         unused_import_braces, unused_qualifications)]
 
+extern crate camera;
+#[macro_use]
 extern crate iron;
+extern crate handlebars;
+extern crate handlebars_iron;
 extern crate heartbeat;
 extern crate notify;
 extern crate router;
@@ -17,6 +21,7 @@ extern crate toml;
 mod config;
 mod error;
 mod handler;
+mod helper;
 mod server;
 mod watch;
 

@@ -1,6 +1,8 @@
 use std::io;
 use std::net::AddrParseError;
 
+use camera;
+use handlebars_iron;
 use heartbeat;
 use notify;
 use toml::{DecodeError, ParserError};
@@ -10,8 +12,12 @@ use toml::{DecodeError, ParserError};
 /// TODO derive Error.
 #[derive(Debug)]
 pub enum Error {
+    /// Wrapper around `camera::Error`.
+    Camera(camera::Error),
     /// Wrapper around `std::io::Error`.
     Io(io::Error),
+    /// Wrapper around `handlebars_iron::SourceError`.
+    HandlebarsSource(handlebars_iron::SourceError),
     /// Wrapper around `heartbeat::Error`.
     Heartbeat(heartbeat::Error),
     /// Wrapper around `std::net::AddrParseError`.
@@ -51,5 +57,17 @@ impl From<DecodeError> for Error {
 impl From<notify::Error> for Error {
     fn from(err: notify::Error) -> Error {
         Error::Notify(err)
+    }
+}
+
+impl From<handlebars_iron::SourceError> for Error {
+    fn from(err: handlebars_iron::SourceError) -> Error {
+        Error::HandlebarsSource(err)
+    }
+}
+
+impl From<camera::Error> for Error {
+    fn from(err: camera::Error) -> Error {
+        Error::Camera(err)
     }
 }

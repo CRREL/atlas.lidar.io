@@ -1,6 +1,10 @@
 [server]
 ip = "127.0.0.1"
 port = 3000
+template_directory = "/Users/gadomski/Repos/glacio/atlas.lidar.io/templates/"
 
 [heartbeat]
 directory = "/Users/gadomski/iridium"
+
+[[camera]]
+directory = "/Users/gadomski/iridiumcam/ATLAS_CAM"

@@ -3,8 +3,14 @@ name = "atlas-lidar-io"
 version = "0.1.0"
 authors = ["Pete Gadomski <pete.gadomski@gmail.com>"]
 
+[features]
+watch = ["handlebars-iron/watch"]
+
 [dependencies]
+camera = { git = "https://github.com/glacio/camera.git" }
 docopt = "*"
+handlebars = "*"
+handlebars-iron = "*"
 heartbeat = { git = "https://github.com/glacio/heartbeat.git" }
 iron = "*"
 notify = "*"

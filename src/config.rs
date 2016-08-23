@@ -11,6 +11,7 @@ use {Error, Result};
 pub struct Config {
     pub server: Server,
     pub heartbeat: Heartbeat,
+    pub camera: Vec<Camera>,
 }
 
 impl Config {
@@ -33,9 +34,16 @@ impl Config {
 pub struct Server {
     pub ip: String,
     pub port: u16,
+    pub template_directory: String,
 }
 
 #[derive(Debug, RustcDecodable)]
 pub struct Heartbeat {
     pub directory: String,
+}
+
+#[derive(Debug, RustcDecodable)]
+pub struct Camera {
+    pub directory: String,
+    pub name: Option<String>,
 }
