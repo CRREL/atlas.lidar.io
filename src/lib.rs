@@ -8,6 +8,7 @@
         unused_import_braces, unused_qualifications)]
 
 extern crate camera;
+extern crate chrono;
 #[macro_use]
 extern crate iron;
 extern crate handlebars;

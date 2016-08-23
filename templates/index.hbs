@@ -10,10 +10,12 @@
 
       <h1>ATLAS</h1>
 
-      <p class="alert alert-warning">
-        Thank you for your patience while we rebuild this site.
-        We've put up this bare-bones status page with the latest information as a holdover while we make this all very shiny.
-      </p>
+      <div class="status-report">
+        <ul class="status-report-list">
+          {{li-status status_report.heartbeat "Heartbeat"}}
+          {{li-status status_report.scan "Scan"}}
+        </ul>
+      </div>
 
       <div class="row">
         <div class="col-xs-12 col-md-6">

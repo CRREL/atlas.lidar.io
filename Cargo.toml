@@ -8,6 +8,7 @@ watch = ["handlebars-iron/watch"]
 
 [dependencies]
 camera = { git = "https://github.com/glacio/camera.git" }
+chrono = "*"
 docopt = "*"
 handlebars = "*"
 handlebars-iron = "*"

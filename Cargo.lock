@@ -3,6 +3,7 @@ name = "atlas-lidar-io"
 version = "0.1.0"
 dependencies = [
  "camera 0.1.0 (git+https://github.com/glacio/camera.git)",
+ "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
  "docopt 0.6.82 (registry+https://github.com/rust-lang/crates.io-index)",
  "handlebars 0.20.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "handlebars-iron 0.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
