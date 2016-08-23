@@ -2,6 +2,7 @@ use std::io;
 use std::net::AddrParseError;
 
 use heartbeat;
+use notify;
 use toml::{DecodeError, ParserError};
 
 /// Crate-specific error enum.
@@ -15,6 +16,8 @@ pub enum Error {
     Heartbeat(heartbeat::Error),
     /// Wrapper around `std::net::AddrParseError`.
     NetAddrParse(AddrParseError),
+    /// Wrapper around `notify::Error`.
+    Notify(notify::Error),
     /// Wrapper around a vector of `toml::ParserError`.
     ParseConfig(Vec<ParserError>),
     /// Wrapper around `toml::DecodeError`.
@@ -42,5 +45,11 @@ impl From<AddrParseError> for Error {
 impl From<DecodeError> for Error {
     fn from(err: DecodeError) -> Error {
         Error::TomlDecode(err)
+    }
+}
+
+impl From<notify::Error> for Error {
+    fn from(err: notify::Error) -> Error {
+        Error::Notify(err)
     }
 }

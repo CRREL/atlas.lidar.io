@@ -1,9 +1,8 @@
 use std::fmt;
 use std::net::SocketAddr;
 use std::path::Path;
-use std::sync::{Arc, RwLock};
+use std::thread;
 
-use heartbeat::Source;
 use iron::Listening;
 use iron::error::HttpResult;
 use iron::prelude::*;
@@ -12,11 +11,13 @@ use router::Router;
 use Result;
 use config::Config;
 use handler::Index;
+use watch::Heartbeat;
 
 /// HTTP server.
 pub struct Server {
     addr: SocketAddr,
     router: Router,
+    watcher: Heartbeat,
 }
 
 impl Server {
@@ -37,15 +38,15 @@ impl Server {
         let ip = try!(config.server.ip.parse());
         let addr = SocketAddr::new(ip, config.server.port);
 
-        let mut source = try!(Source::from_path(&config.heartbeat.directory));
-        let heartbeats = Arc::new(RwLock::new(try!(source.heartbeats())));
+        let watcher = try!(Heartbeat::new(&config.heartbeat.directory));
 
         let mut router = Router::new();
-        router.get("/", Index::new(heartbeats));
+        router.get("/", Index::new(watcher.heartbeats()));
 
         Ok(Server {
             addr: addr,
             router: router,
+            watcher: watcher,
         })
     }
 
@@ -59,6 +60,8 @@ impl Server {
     /// server.serve().unwrap();
     /// ```
     pub fn serve(self) -> HttpResult<Listening> {
+        let mut watcher = self.watcher;
+        thread::spawn(move || watcher.watch().unwrap());
         let chain = Chain::new(self.router);
         Iron::new(chain).http(self.addr)
     }

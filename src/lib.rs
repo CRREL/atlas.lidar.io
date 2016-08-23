@@ -9,6 +9,7 @@
 
 extern crate iron;
 extern crate heartbeat;
+extern crate notify;
 extern crate router;
 extern crate rustc_serialize;
 extern crate toml;
@@ -17,6 +18,7 @@ mod config;
 mod error;
 mod handler;
 mod server;
+mod watch;
 
 pub use error::Error;
 pub use server::Server;
