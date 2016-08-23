@@ -13,9 +13,11 @@ handlebars = "*"
 handlebars-iron = "*"
 heartbeat = { git = "https://github.com/glacio/heartbeat.git" }
 iron = "*"
+mount = "*"
 notify = "*"
 router = "*"
 rustc-serialize = "*"
+staticfile = "*"
 toml = "*"
 
 [[bin]]

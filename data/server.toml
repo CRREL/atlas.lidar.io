@@ -2,6 +2,7 @@
 ip = "127.0.0.1"
 port = 3000
 template_directory = "/Users/gadomski/Repos/glacio/atlas.lidar.io/templates/"
+static_directory = "/Users/gadomski/Repos/glacio/atlas.lidar.io/static/"
 
 [heartbeat]
 directory = "/Users/gadomski/iridium"

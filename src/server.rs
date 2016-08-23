@@ -1,6 +1,6 @@
 use std::fmt;
 use std::net::SocketAddr;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::thread;
 #[cfg(feature = "watch")]
 use std::sync::Arc;
@@ -12,7 +12,9 @@ use handlebars_iron::Watchable;
 use iron::Listening;
 use iron::error::HttpResult;
 use iron::prelude::*;
+use mount::Mount;
 use router::Router;
+use staticfile::Static;
 
 use Result;
 use config::Config;
@@ -23,9 +25,7 @@ use watch::Heartbeat;
 /// HTTP server.
 pub struct Server {
     addr: SocketAddr,
-    handlebars_engine: HandlebarsEngine,
-    router: Router,
-    template_directory: PathBuf,
+    chain: Chain,
     watcher: Heartbeat,
 }
 
@@ -65,6 +65,10 @@ impl Server {
 
         let mut router = Router::new();
         router.get("/", Index::new(cameras, watcher.heartbeats()));
+        let mut mount = Mount::new();
+        mount.mount("/static/", Static::new(&config.server.static_directory));
+        mount.mount("/", router);
+        let mut chain = Chain::new(mount);
 
         let mut handlebars_engine = HandlebarsEngine::new();
         handlebars_engine.add(Box::new(DirectorySource::new(&config.server.template_directory, ".hbs")));
@@ -76,12 +80,12 @@ impl Server {
             registry.register_helper("percentage", Box::new(helper::percentage));
             registry.register_helper("orion-percentage", Box::new(helper::orion_percentage));
         }
+        chain.link_after(maybe_watch_handlebars_engine(&config.server.template_directory,
+                                                       handlebars_engine));
 
         Ok(Server {
             addr: addr,
-            handlebars_engine: handlebars_engine,
-            template_directory: PathBuf::from(&config.server.template_directory),
-            router: router,
+            chain: chain,
             watcher: watcher,
         })
     }
@@ -98,11 +102,7 @@ impl Server {
     pub fn serve(self) -> HttpResult<Listening> {
         let mut watcher = self.watcher;
         thread::spawn(move || watcher.watch().unwrap());
-
-        let mut chain = Chain::new(self.router);
-        chain.link_after(maybe_watch_handlebars_engine(self.template_directory,
-                                                       self.handlebars_engine));
-        Iron::new(chain).http(self.addr)
+        Iron::new(self.chain).http(self.addr)
     }
 }
 

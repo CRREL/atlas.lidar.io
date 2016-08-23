@@ -34,6 +34,7 @@ impl Config {
 pub struct Server {
     pub ip: String,
     pub port: u16,
+    pub static_directory: String,
     pub template_directory: String,
 }
 

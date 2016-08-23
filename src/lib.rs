@@ -13,9 +13,11 @@ extern crate iron;
 extern crate handlebars;
 extern crate handlebars_iron;
 extern crate heartbeat;
+extern crate mount;
 extern crate notify;
 extern crate router;
 extern crate rustc_serialize;
+extern crate staticfile;
 extern crate toml;
 
 mod config;

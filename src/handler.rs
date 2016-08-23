@@ -28,7 +28,11 @@ impl Handler for Index {
         let heartbeat = iexpect!(heartbeats.last());
         let mut data = Object::new();
         data.insert("heartbeat".to_string(), heartbeat.to_json());
-        data.insert("cameras".to_string(), self.cameras.to_json());
+        let mut cameras = self.cameras.to_json();
+        if let Some(camera) = cameras.as_array_mut().unwrap().first_mut() {
+            camera.as_object_mut().unwrap().insert("active".to_string(), "active".to_json());
+        }
+        data.insert("cameras".to_string(), cameras);
         let mut response = Response::new();
         response.set_mut(Template::new("index", data)).set_mut(status::Ok);
         Ok(response)
