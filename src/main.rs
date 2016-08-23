@@ -27,7 +27,7 @@ fn main() {
     let args: Args = Docopt::new(USAGE)
         .map(|d| d.version(option_env!("CARGO_PKG_VERSION").map(|s| s.to_string())))
         .and_then(|d| d.decode())
-        .unwrap();
+        .unwrap_or_else(|e| e.exit());
     let server = Server::from_path(&args.arg_config).unwrap();
     server.serve().unwrap();
 }
