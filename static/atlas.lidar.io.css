@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 60px;
+}
+
 .status-report {
   overflow: hidden;
 }

@@ -69,6 +69,23 @@
         </div>
         {{/with}}
       </div>
+
+      <h2>Cameras</h2>
+
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          {{#each cameras}}
+          <img src="{{latest_image.url}}" class="img-rounded" style="width: 140px">
+          {{/each}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2" style="margin-top: 20px;">
+          {{#with cameras.[0]}}
+          <img src="{{latest_image.url}}" class="img-responsive">
+          {{/with}}
+        </div>
+      </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

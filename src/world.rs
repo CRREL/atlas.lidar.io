@@ -2,6 +2,7 @@ use std::collections::{BTreeMap, HashMap};
 use std::sync::{Arc, RwLock};
 use std::thread;
 
+use camera::Camera;
 use chrono::{DateTime, UTC};
 use heartbeat::Heartbeat;
 use rustc_serialize::json::{Json, Object, ToJson};
@@ -10,18 +11,32 @@ use {Result, config, watch};
 
 #[derive(Clone, Debug)]
 pub struct World {
+    cameras: Vec<Camera>,
     heartbeats: Arc<RwLock<Vec<Heartbeat>>>,
     heartbeat_watcher: watch::Heartbeat,
     intervals: HashMap<String, config::Interval>,
 }
 
 impl World {
-    pub fn new(heartbeat: config::Heartbeat, _: Vec<config::Camera>) -> Result<World> {
+    pub fn new(heartbeat: config::Heartbeat, cameras: Vec<config::Camera>) -> Result<World> {
         let heartbeat_watcher = try!(watch::Heartbeat::new(heartbeat.directory));
         let mut intervals = HashMap::new();
         intervals.insert("heartbeat".to_string(), heartbeat.interval);
         intervals.insert("scan".to_string(), heartbeat.scan_interval);
+        let cameras = try!(cameras.into_iter()
+            .map(|c| {
+                let mut camera = try!(Camera::new(c.directory));
+                if let Some(name) = c.name {
+                    camera.set_name(&name);
+                }
+                if let Some(url_path) = c.url_path {
+                    camera.set_url_path(&url_path);
+                }
+                Ok(camera)
+            })
+            .collect::<Result<_>>());
         Ok(World {
+            cameras: cameras,
             heartbeats: heartbeat_watcher.heartbeats(),
             heartbeat_watcher: heartbeat_watcher,
             intervals: intervals,
@@ -98,6 +113,7 @@ impl ToJson for World {
         if let Some(heartbeat) = self.heartbeats.read().unwrap().last() {
             world.insert("heartbeat".to_string(), heartbeat.to_json());
         }
+        world.insert("cameras".to_string(), self.cameras.to_json());
         Json::Object(world)
     }
 }

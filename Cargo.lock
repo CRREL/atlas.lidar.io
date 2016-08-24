@@ -43,7 +43,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "camera"
 version = "0.1.0"
-source = "git+https://github.com/glacio/camera.git#2928dd63e5d79da525f95c005ae3d96cf8e294d0"
+source = "git+https://github.com/glacio/camera.git#1419768c61a226a15764c9b06d11adaeede01c51"
 dependencies = [
  "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
