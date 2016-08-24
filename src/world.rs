@@ -13,7 +13,7 @@ pub struct World {
 }
 
 impl World {
-    pub fn new(heartbeat: config::Heartbeat, cameras: Vec<config::Camera>) -> Result<World> {
+    pub fn new(heartbeat: config::Heartbeat, _: Vec<config::Camera>) -> Result<World> {
         let heartbeat_watcher = try!(watch::Heartbeat::new(heartbeat.directory));
         Ok(World {
             heartbeats: heartbeat_watcher.heartbeats(),
