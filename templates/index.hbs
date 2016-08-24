@@ -15,10 +15,10 @@
       <div class="status-report">
         <ul class="status-report-list">
           {{#each status}}
-          <li class="status-report status-report-{{name}}">
-            <span class="glyphicon glyphicon-{{glyphicon}}" aria-hidden="true"></span>
-            <span class="status-report-name">{{@key}}</span>
-            <span class="status-report-status">{{name}}</span>
+          <li class="status-report status-report-{{status.name}}">
+            <span class="glyphicon glyphicon-{{status.glyphicon}}" aria-hidden="true"></span>
+            <span class="status-report-name">{{name}}</span>
+            <span class="status-report-status">{{status.name}}</span>
           </li>
           {{/each}}
         </ul>
@@ -77,15 +77,15 @@
       <div class="row">
         <div class="col-xs-12 text-center">
           {{#each cameras}}
-          <img src="{{latest_image.url}}" class="img-rounded" style="width: 140px">
+          <img src="{{camera.latest_image.url}}" class="img-rounded" style="width: 140px; margin: 2px;">
           {{/each}}
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2 text-center" style="margin-top: 20px;">
           {{#with cameras.[0]}}
-          <img src="{{latest_image.url}}" class="img-responsive">
-          <p>{{name}} at {{latest_image.datetime}}</p>
+          <img src="{{camera.latest_image.url}}" class="img-responsive">
+          <p>{{name}} at {{camera.latest_image.datetime}}</p>
           {{/with}}
         </div>
       </div>

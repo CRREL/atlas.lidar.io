@@ -11,21 +11,29 @@ scan_interval = { ok = 420, late = 780 }
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/ATLAS_CAM"
+interval = { ok = 200, late = 380 }
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/ATLAS_CAM2"
 name = "ATLAS_CAM2_StarDot1"
+display_name = "ATLAS_CAM2"
+interval = { ok = 420, late = 780 }
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/HEL_DUAL/StarDot2"
 name = "HEL_DUAL_StarDot2"
+display_name = "HEL_DUAL2"
 url_path = "HEL_DUAL/StarDot2"
+interval = { ok = 200, late = 380 }
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/HEL_DUAL/StarDot1"
 name = "HEL_DUAL_StarDot1"
+display_name = "HEL_DUAL1"
 url_path = "HEL_DUAL/StarDot1"
+interval = { ok = 200, late = 380 }
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/HEL_MELANGE"
 name = "Hel_Melange"
+interval = { ok = 200, late = 380 }

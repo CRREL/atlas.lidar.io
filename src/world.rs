@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::HashMap;
 use std::sync::{Arc, RwLock};
 use std::thread;
 
@@ -11,32 +11,37 @@ use {Result, config, watch};
 
 #[derive(Clone, Debug)]
 pub struct World {
-    cameras: Vec<Camera>,
+    display_cameras: Vec<DisplayCamera>,
     heartbeats: Arc<RwLock<Vec<Heartbeat>>>,
     heartbeat_watcher: watch::Heartbeat,
     intervals: HashMap<String, config::Interval>,
 }
 
 impl World {
-    pub fn new(heartbeat: config::Heartbeat, cameras: Vec<config::Camera>) -> Result<World> {
-        let heartbeat_watcher = try!(watch::Heartbeat::new(heartbeat.directory));
+    pub fn new(heartbeat_config: config::Heartbeat,
+               camera_config: Vec<config::Camera>)
+               -> Result<World> {
+        let heartbeat_watcher = try!(watch::Heartbeat::new(heartbeat_config.directory));
         let mut intervals = HashMap::new();
-        intervals.insert("heartbeat".to_string(), heartbeat.interval);
-        intervals.insert("scan".to_string(), heartbeat.scan_interval);
-        let cameras = try!(cameras.into_iter()
-            .map(|c| {
-                let mut camera = try!(Camera::new(c.directory));
-                if let Some(name) = c.name {
-                    camera.set_name(&name);
-                }
-                if let Some(url_path) = c.url_path {
-                    camera.set_url_path(&url_path);
-                }
-                Ok(camera)
-            })
-            .collect::<Result<_>>());
+        intervals.insert("heartbeat".to_string(), heartbeat_config.interval);
+        intervals.insert("scan".to_string(), heartbeat_config.scan_interval);
+        let mut cameras = Vec::new();
+        for config in camera_config {
+            let mut camera = try!(Camera::new(config.directory));
+            if let Some(name) = config.name {
+                camera.set_name(&name);
+            }
+            if let Some(url_path) = config.url_path {
+                camera.set_url_path(&url_path);
+            }
+            intervals.insert(camera.name().to_string(), config.interval);
+            cameras.push(DisplayCamera {
+                name: config.display_name.unwrap_or_else(|| camera.name().to_string()),
+                camera: camera,
+            });
+        }
         Ok(World {
-            cameras: cameras,
+            display_cameras: cameras,
             heartbeats: heartbeat_watcher.heartbeats(),
             heartbeat_watcher: heartbeat_watcher,
             intervals: intervals,
@@ -47,15 +52,64 @@ impl World {
         thread::spawn(move || self.heartbeat_watcher.watch().unwrap());
     }
 
-    fn status(&self) -> BTreeMap<String, Status> {
-        let mut status = BTreeMap::new();
+    fn status(&self) -> Vec<Component> {
+        let mut status = Vec::new();
         let heartbeats = self.heartbeats.read().unwrap();
         let heartbeat = heartbeats.last();
-        status.insert("Heartbeat".to_string(),
-                      Status::new(heartbeat.map(|h| h.start_time), self.intervals["heartbeat"]));
-        status.insert("Scan".to_string(),
-                      Status::new(heartbeat.map(|h| h.last_scan.start), self.intervals["scan"]));
+        status.push(Component::new("Heartbeat",
+                                   Status::new(heartbeat.map(|h| h.start_time),
+                                               self.intervals["heartbeat"])));
+        status.push(Component::new("Scan",
+                                   Status::new(heartbeat.map(|h| h.last_scan.start),
+                                               self.intervals["scan"])));
+        for display_camera in &self.display_cameras {
+            let interval = self.intervals[display_camera.camera.name()];
+            status.push(Component::new(&display_camera.name,
+                                       Status::new(display_camera.camera
+                                                       .latest_image()
+                                                       .unwrap_or(None)
+                                                       .map(|i| i.datetime),
+                                                   interval)));
+        }
         status
+    }
+}
+
+#[derive(Clone, Debug)]
+struct DisplayCamera {
+    name: String,
+    camera: Camera,
+}
+
+impl ToJson for DisplayCamera {
+    fn to_json(&self) -> Json {
+        let mut component = Object::new();
+        component.insert("name".to_string(), self.name.to_json());
+        component.insert("camera".to_string(), self.camera.to_json());
+        Json::Object(component)
+    }
+}
+
+struct Component {
+    name: String,
+    status: Status,
+}
+
+impl Component {
+    fn new(name: &str, status: Status) -> Component {
+        Component {
+            name: name.to_string(),
+            status: status,
+        }
+    }
+}
+
+impl ToJson for Component {
+    fn to_json(&self) -> Json {
+        let mut component = Object::new();
+        component.insert("name".to_string(), self.name.to_json());
+        component.insert("status".to_string(), self.status.to_json());
+        Json::Object(component)
     }
 }
 
@@ -113,7 +167,7 @@ impl ToJson for World {
         if let Some(heartbeat) = self.heartbeats.read().unwrap().last() {
             world.insert("heartbeat".to_string(), heartbeat.to_json());
         }
-        world.insert("cameras".to_string(), self.cameras.to_json());
+        world.insert("cameras".to_string(), self.display_cameras.to_json());
         Json::Object(world)
     }
 }

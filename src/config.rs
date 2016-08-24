@@ -68,9 +68,11 @@ pub struct Heartbeat {
 
 #[derive(Debug, RustcDecodable)]
 pub struct Camera {
+    pub display_name: Option<String>,
     pub directory: String,
     pub name: Option<String>,
     pub url_path: Option<String>,
+    pub interval: Interval,
 }
 
 #[cfg(test)]
