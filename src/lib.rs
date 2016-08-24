@@ -21,6 +21,7 @@ extern crate rustc_serialize;
 extern crate staticfile;
 extern crate toml;
 
+mod api;
 mod config;
 mod error;
 mod handler;

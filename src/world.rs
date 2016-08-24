@@ -12,7 +12,7 @@ use {Result, config, watch};
 #[derive(Clone, Debug)]
 pub struct World {
     display_cameras: Vec<DisplayCamera>,
-    heartbeats: Arc<RwLock<Vec<Heartbeat>>>,
+    pub heartbeats: Arc<RwLock<Vec<Heartbeat>>>,
     heartbeat_watcher: watch::Heartbeat,
     intervals: HashMap<String, config::Interval>,
 }

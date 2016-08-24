@@ -11,13 +11,13 @@ use iron::Listening;
 use iron::error::HttpResult;
 use iron::prelude::*;
 use mount::Mount;
-use router::Router;
 use staticfile::Static;
 
 use Result;
+use api::Api;
 use config::Config;
-use helper;
 use handler::Index;
+use helper;
 use world::World;
 
 /// HTTP server.
@@ -48,11 +48,10 @@ impl Server {
         let ip = try!(config.ip.parse());
         let addr = SocketAddr::new(ip, config.port);
 
-        let mut router = Router::new();
-        router.get("/", Index::new(world.clone()));
         let mut mount = Mount::new();
         mount.mount("/static/", Static::new(&config.static_directory));
-        mount.mount("/", router);
+        mount.mount("/api/v1/", Api::new(world.clone()));
+        mount.mount("/", Index::new(world.clone()));
         let mut chain = Chain::new(mount);
 
         let mut handlebars_engine = HandlebarsEngine::new();
