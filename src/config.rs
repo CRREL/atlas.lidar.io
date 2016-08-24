@@ -1,11 +1,32 @@
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
+use std::result;
 
-use rustc_serialize::Decodable;
+use chrono::Duration;
+use rustc_serialize::{Decodable, Decoder as RustcSerializeDecoder};
 use toml::{Decoder, Parser, Value};
 
 use {Error, Result};
+
+#[derive(Clone, Copy, Debug)]
+pub struct Interval {
+    pub ok: Duration,
+    pub late: Duration,
+}
+
+impl Decodable for Interval {
+    fn decode<D: RustcSerializeDecoder>(d: &mut D) -> result::Result<Interval, D::Error> {
+        d.read_struct("Interval", 2, |d| {
+            let ok = try!(d.read_struct_field("ok", 0, |d| d.read_i64()));
+            let late = try!(d.read_struct_field("late", 0, |d| d.read_i64()));
+            Ok(Interval {
+                ok: Duration::minutes(ok),
+                late: Duration::minutes(late),
+            })
+        })
+    }
+}
 
 #[derive(Debug, RustcDecodable)]
 pub struct Config {
@@ -41,6 +62,8 @@ pub struct Server {
 #[derive(Debug, RustcDecodable)]
 pub struct Heartbeat {
     pub directory: String,
+    pub interval: Interval,
+    pub scan_interval: Interval,
 }
 
 #[derive(Debug, RustcDecodable)]

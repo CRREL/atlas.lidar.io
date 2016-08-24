@@ -14,23 +14,23 @@
   padding: 10px;
   line-height: 1.4;
   text-align: center;
-  border: 1px solid #FFF;
+  border: 1px solid #fff;
 }
 
 .status-report li.status-report-ok {
-  background-color: #4DFA90;
+  background-color: #dff0d8;
 }
 
 .status-report li.status-report-late {
-  background-color: #FABE4D;
+  background-color: #fcf8e3;
 }
 
 .status-report li.status-report-stopped {
-  background-color: #FF5468;
+  background-color: #f2dede;
 }
 
 .status-report li.status-report-missing {
-  background-color: #525252;
+  background-color: #ccc;
 }
 
 .status-report .glyphicon {
