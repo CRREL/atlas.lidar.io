@@ -61,3 +61,17 @@ body {
     font-size: 12px;
   }
 }
+
+.camera-picker .camera-picker-thumbnails {
+  text-align: center;
+}
+
+.camera-picker .camera-picker-thumbnail {
+  width: 140px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.camera-picker .camera-picker-thumbnail:hover {
+  box-shadow: 2px 2px 1px #aaa;
+}
