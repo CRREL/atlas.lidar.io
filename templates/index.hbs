@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>ATLAS</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/atlas.lidar.io.css">
@@ -80,9 +82,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-2" style="margin-top: 20px;">
+        <div class="col-xs-12 col-md-8 col-md-offset-2 text-center" style="margin-top: 20px;">
           {{#with cameras.[0]}}
           <img src="{{latest_image.url}}" class="img-responsive">
+          <p>{{name}} at {{latest_image.datetime}}</p>
           {{/with}}
         </div>
       </div>
