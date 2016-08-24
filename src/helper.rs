@@ -1,4 +1,6 @@
-use handlebars::{Context, Handlebars, Helper, RenderContext, RenderError};
+use handlebars::{Context, Handlebars, Helper, HelperDef, RenderContext, RenderError};
+use heartbeat::units::{OrionPercentage, Percentage};
+use rustc_serialize::json::{Json, Object, ToJson};
 
 pub fn degrees_celsius(_: &Context,
                        h: &Helper,
@@ -35,8 +37,9 @@ pub fn orion_percentage(_: &Context,
                         _: &Handlebars,
                         rc: &mut RenderContext)
                         -> Result<(), RenderError> {
-    let orion_percentage = h.param(0).unwrap().value().as_f64().unwrap();
-    try!(write!(rc.writer, "{:.2} %", 100.0 * orion_percentage / 5.0));
+    let percentage: Percentage =
+        OrionPercentage(h.param(0).unwrap().value().as_f64().unwrap() as f32).into();
+    try!(write!(rc.writer, "{:.2} %", percentage.0));
     Ok(())
 }
 
@@ -48,6 +51,45 @@ pub fn commas(_: &Context,
     let number = h.param(0).unwrap().value().as_u64().unwrap();
     try!(write!(rc.writer, "{}", utils::commas(number)));
     Ok(())
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct BatteryCharge {
+    pub green_floor: f32,
+    pub yellow_floor: f32,
+}
+
+impl BatteryCharge {
+    fn progress_bar_data(&self, soc: f32) -> Json {
+        let mut data = Object::new();
+        data.insert("color".to_string(),
+                    if soc > self.green_floor {
+                            "success"
+                        } else if soc > self.yellow_floor {
+                            "warning"
+                        } else {
+                            "danger"
+                        }
+                        .to_json());
+        data.insert("soc".to_string(), soc.to_json());
+        Json::Object(data)
+    }
+}
+
+impl HelperDef for BatteryCharge {
+    fn call(&self,
+            _: &Context,
+            h: &Helper,
+            handlebars: &Handlebars,
+            rc: &mut RenderContext)
+            -> Result<(), RenderError> {
+        let soc: Percentage = OrionPercentage(h.param(0).unwrap().value().as_f64().unwrap() as f32)
+            .into();
+        try!(write!(rc.writer,
+                    "{}",
+                    try!(handlebars.render("progress-bar", &self.progress_bar_data(soc.0)))));
+        Ok(())
+    }
 }
 
 mod utils {

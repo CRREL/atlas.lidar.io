@@ -65,6 +65,12 @@ impl Server {
             registry.register_helper("percentage", Box::new(helper::percentage));
             registry.register_helper("orion-percentage", Box::new(helper::orion_percentage));
             registry.register_helper("commas", Box::new(helper::commas));
+            registry.register_helper("battery-charge",
+                                     // TODO configure?
+                                     Box::new(helper::BatteryCharge {
+                                         green_floor: 70.,
+                                         yellow_floor: 50.,
+                                     }));
         }
         chain.link_after(maybe_watch_handlebars_engine(&config.template_directory,
                                                        handlebars_engine));
