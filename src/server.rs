@@ -64,7 +64,6 @@ impl Server {
             registry.register_helper("millibars", Box::new(helper::millibars));
             registry.register_helper("percentage", Box::new(helper::percentage));
             registry.register_helper("orion-percentage", Box::new(helper::orion_percentage));
-            registry.register_helper("li-status", Box::new(helper::li_status));
         }
         chain.link_after(maybe_watch_handlebars_engine(&config.template_directory,
                                                        handlebars_engine));
