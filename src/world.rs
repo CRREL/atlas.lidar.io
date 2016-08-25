@@ -9,6 +9,9 @@ use rustc_serialize::json::{Json, Object, ToJson};
 
 use {Result, config, watch};
 
+const HEARTBEAT_DESCRIPTION: &'static str = "Hourly status messages from the ATLAS system.";
+const SCAN_DESCRIPTION: &'static str = "LiDAR scans of the Helheim Glacier. These occur four times a day, at 00:00, 06:00, 12:00, and 18:00 UTC.";
+
 #[derive(Clone, Debug)]
 pub struct World {
     display_cameras: Vec<DisplayCamera>,
@@ -88,14 +91,17 @@ impl World {
         let heartbeats = self.heartbeats.read().unwrap();
         let heartbeat = heartbeats.last();
         status.push(Component::new("Heartbeat",
+                                   HEARTBEAT_DESCRIPTION,
                                    Status::new(heartbeat.map(|h| h.start_time),
                                                self.intervals["heartbeat"])));
         status.push(Component::new("Scan",
+                                   SCAN_DESCRIPTION,
                                    Status::new(heartbeat.map(|h| h.last_scan.start),
                                                self.intervals["scan"])));
         for display_camera in &self.display_cameras {
             let interval = self.intervals[display_camera.camera.name()];
             status.push(Component::new(&display_camera.name,
+                                       &display_camera.description,
                                        Status::new(display_camera.camera
                                                        .latest_image()
                                                        .unwrap_or(None)
@@ -133,13 +139,15 @@ impl ToJson for DisplayCamera {
 
 struct Component {
     name: String,
+    description: String,
     status: Status,
 }
 
 impl Component {
-    fn new(name: &str, status: Status) -> Component {
+    fn new(name: &str, description: &str, status: Status) -> Component {
         Component {
             name: name.to_string(),
+            description: description.to_string(),
             status: status,
         }
     }
@@ -149,6 +157,7 @@ impl ToJson for Component {
     fn to_json(&self) -> Json {
         let mut component = Object::new();
         component.insert("name".to_string(), self.name.to_json());
+        component.insert("description".to_string(), self.description.to_json());
         component.insert("status".to_string(), self.status.to_json());
         Json::Object(component)
     }

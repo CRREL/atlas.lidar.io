@@ -1,3 +1,5 @@
+$('[data-toggle="tooltip"]').tooltip();
+
 $(".camera-picker-thumbnail").click(function() {
   var name = $(this).data("name");
   $(".camera-picker-image").addClass("hidden");
