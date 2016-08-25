@@ -33,6 +33,7 @@ pub struct Config {
     pub server: Server,
     pub heartbeat: Heartbeat,
     pub camera: Vec<Camera>,
+    pub gif: Gif,
 }
 
 impl Config {
@@ -73,6 +74,21 @@ pub struct Camera {
     pub name: Option<String>,
     pub url_path: Option<String>,
     pub interval: Interval,
+    pub gif: Option<CameraGif>,
+}
+
+#[derive(Debug, RustcDecodable)]
+pub struct Gif {
+    pub delay: i64,
+    pub height: usize,
+    pub width: usize,
+    pub loop_gif: bool,
+}
+
+#[derive(Debug, RustcDecodable)]
+pub struct CameraGif {
+    pub hours: Vec<u32>,
+    pub days: i64,
 }
 
 #[cfg(test)]

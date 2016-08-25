@@ -16,7 +16,7 @@ use staticfile::Static;
 use Result;
 use api::Api;
 use config::Config;
-use handler::Index;
+use handler::{Gif, Index};
 use helper;
 use world::World;
 
@@ -42,7 +42,7 @@ impl Server {
     }
 
     fn new(config: Config) -> Result<Server> {
-        let world = try!(World::new(config.heartbeat, config.camera));
+        let world = try!(World::new(config.heartbeat, config.camera, config.gif));
         let config = config.server;
 
         let ip = try!(config.ip.parse());
@@ -51,6 +51,7 @@ impl Server {
         let mut mount = Mount::new();
         mount.mount("/static/", Static::new(&config.static_directory));
         mount.mount("/api/v1/", Api::new(world.clone()));
+        mount.mount("/gif/", Gif::new(world.clone()));
         mount.mount("/", Index::new(world.clone()));
         let mut chain = Chain::new(mount);
 

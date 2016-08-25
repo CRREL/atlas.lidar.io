@@ -5,6 +5,27 @@ $(".camera-picker-thumbnail").click(function() {
 });
 $(".camera-picker-thumbnail")[0].click();
 
+$(".camera-picker-animate").click(function() {
+  if ($(this).data("animate")) {
+    deanimate(this);
+  } else {
+    animate(this);
+  }
+});
+function animate(button) {
+  $(".camera-picker-images").addClass("hidden");
+  $(".camera-picker-gifs").removeClass("hidden");
+  $(button).find(".glyphicon").removeClass("glyphicon-play").addClass("glyphicon-stop");
+  $(button).data("animate", true);
+}
+function deanimate(button) {
+  $(".camera-picker-images").removeClass("hidden");
+  $(".camera-picker-gifs").addClass("hidden");
+  $(button).find(".glyphicon").removeClass("glyphicon-stop").addClass("glyphicon-play");
+  $(button).data("animate", false);
+}
+deanimate($(".camera-picker-animate"));
+
 var soc_graph = new Dygraph(document.getElementById("soc-graph"), "/api/v1/soc", {
   dateWindow: [Date.now() - 2 * 30 * 24 * 60 * 60 * 1000, Date.now()],
   height: 300,

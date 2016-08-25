@@ -2,8 +2,8 @@ use std::collections::HashMap;
 use std::sync::{Arc, RwLock};
 use std::thread;
 
-use camera::Camera;
-use chrono::{DateTime, UTC};
+use camera::{Camera, Gif};
+use chrono::{DateTime, Duration, UTC};
 use heartbeat::Heartbeat;
 use rustc_serialize::json::{Json, Object, ToJson};
 
@@ -12,20 +12,33 @@ use {Result, config, watch};
 #[derive(Clone, Debug)]
 pub struct World {
     display_cameras: Vec<DisplayCamera>,
-    pub heartbeats: Arc<RwLock<Vec<Heartbeat>>>,
+    gif_watchers: Vec<watch::Gif>,
+    pub gifs: HashMap<String, Arc<RwLock<Vec<u8>>>>,
     heartbeat_watcher: watch::Heartbeat,
+    pub heartbeats: Arc<RwLock<Vec<Heartbeat>>>,
     intervals: HashMap<String, config::Interval>,
 }
 
 impl World {
     pub fn new(heartbeat_config: config::Heartbeat,
-               camera_config: Vec<config::Camera>)
+               camera_config: Vec<config::Camera>,
+               gif_config: config::Gif)
                -> Result<World> {
         let heartbeat_watcher = try!(watch::Heartbeat::new(heartbeat_config.directory));
+
         let mut intervals = HashMap::new();
         intervals.insert("heartbeat".to_string(), heartbeat_config.interval);
         intervals.insert("scan".to_string(), heartbeat_config.scan_interval);
+
+        let mut gif = Gif::new();
+        gif.set_delay(Duration::milliseconds(gif_config.delay * 10));
+        gif.set_width(gif_config.width);
+        gif.set_height(gif_config.height);
+        gif.set_loop(gif_config.loop_gif);
+
         let mut cameras = Vec::new();
+        let mut gif_watchers = Vec::new();
+        let mut gifs = HashMap::new();
         for config in camera_config {
             let mut camera = try!(Camera::new(config.directory));
             if let Some(name) = config.name {
@@ -37,19 +50,36 @@ impl World {
             intervals.insert(camera.name().to_string(), config.interval);
             cameras.push(DisplayCamera {
                 name: config.display_name.unwrap_or_else(|| camera.name().to_string()),
-                camera: camera,
+                camera: camera.clone(),
+                gif_url: config.gif
+                    .as_ref()
+                    .map(|_| format!("/gif/{}.gif", camera.name().to_string())),
+                gif_days: config.gif.as_ref().map(|c| c.days),
             });
+            if let Some(gif_config) = config.gif {
+                let name = camera.name().to_string();
+                let watcher = watch::Gif::new(gif, camera, gif_config.hours, gif_config.days);
+                gifs.insert(name, watcher.gif());
+                gif_watchers.push(watcher);
+            }
         }
+
         Ok(World {
             display_cameras: cameras,
+            gifs: gifs,
+            gif_watchers: gif_watchers,
             heartbeats: heartbeat_watcher.heartbeats(),
             heartbeat_watcher: heartbeat_watcher,
             intervals: intervals,
         })
     }
 
-    pub fn serve(mut self) {
-        thread::spawn(move || self.heartbeat_watcher.watch().unwrap());
+    pub fn serve(self) {
+        let mut heartbeat_watcher = self.heartbeat_watcher;
+        thread::spawn(move || heartbeat_watcher.watch().unwrap());
+        for mut watcher in self.gif_watchers {
+            thread::spawn(move || watcher.watch().unwrap());
+        }
     }
 
     fn status(&self) -> Vec<Component> {
@@ -79,14 +109,22 @@ impl World {
 struct DisplayCamera {
     name: String,
     camera: Camera,
+    gif_url: Option<String>,
+    gif_days: Option<i64>,
 }
 
 impl ToJson for DisplayCamera {
     fn to_json(&self) -> Json {
-        let mut component = Object::new();
-        component.insert("name".to_string(), self.name.to_json());
-        component.insert("camera".to_string(), self.camera.to_json());
-        Json::Object(component)
+        let mut camera = Object::new();
+        camera.insert("name".to_string(), self.name.to_json());
+        camera.insert("camera".to_string(), self.camera.to_json());
+        if let Some(ref url) = self.gif_url {
+            let mut gif = Object::new();
+            gif.insert("url".to_string(), url.to_json());
+            gif.insert("days".to_string(), self.gif_days.to_json());
+            camera.insert("gif".to_string(), gif.to_json());
+        }
+        Json::Object(camera)
     }
 }
 

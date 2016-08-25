@@ -43,9 +43,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "camera"
 version = "0.1.0"
-source = "git+https://github.com/glacio/camera.git#1419768c61a226a15764c9b06d11adaeede01c51"
+source = "git+https://github.com/glacio/camera.git#c8b9c84543509dcc5cbc8cbb3e99d5a8f8392a42"
 dependencies = [
  "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
+ "magick_rust 0.5.2 (git+https://github.com/gadomski/magick-rust.git?branch=remove-usr-local-lib-link-path)",
  "rustc-serialize 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "url 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -267,6 +268,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "log"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "magick_rust"
+version = "0.5.2"
+source = "git+https://github.com/gadomski/magick-rust.git?branch=remove-usr-local-lib-link-path#75632317071219954b7eafbefd54946346d2221b"
+dependencies = [
+ "libc 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "matches"
