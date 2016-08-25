@@ -17,12 +17,14 @@ loop_gif = true
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/ATLAS_CAM"
+description = "One of two cameras located at the ATLAS site. This camera has been in place since system installation in 2015."
 interval = { ok = 200, late = 380 }
 gif = { hours = [12], days = 30 }
 
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/ATLAS_CAM2"
 name = "ATLAS_CAM2_StarDot1"
+description = "The other camera at the ATLAS site. This camera was installed in August 2016 and provides a closer view of the scanner."
 display_name = "ATLAS_CAM2"
 interval = { ok = 420, late = 780 }
 gif = { hours = [12], days = 30 }
@@ -31,6 +33,7 @@ gif = { hours = [12], days = 30 }
 directory = "/Users/gadomski/iridiumcam/HEL_DUAL/StarDot2"
 name = "HEL_DUAL_StarDot2"
 display_name = "HEL_DUAL2"
+description = "One of two cameras located just downhill from the ATLAS site, pointing at the glacier. This camera captures the upstream view."
 url_path = "HEL_DUAL/StarDot2"
 interval = { ok = 200, late = 380 }
 gif = { hours = [12], days = 30 }
@@ -39,6 +42,7 @@ gif = { hours = [12], days = 30 }
 directory = "/Users/gadomski/iridiumcam/HEL_DUAL/StarDot1"
 name = "HEL_DUAL_StarDot1"
 display_name = "HEL_DUAL1"
+description = "The other camera located just downhill from the ATLAS site, pointing at the glacier. This camera captures the downstream view."
 url_path = "HEL_DUAL/StarDot1"
 interval = { ok = 200, late = 380 }
 gif = { hours = [12], days = 30 }
@@ -46,5 +50,6 @@ gif = { hours = [12], days = 30 }
 [[camera]]
 directory = "/Users/gadomski/iridiumcam/HEL_MELANGE"
 name = "Hel_Melange"
+description = "This camera captures a view of the Helheim melange, the icy portion of the ocean just downstream of the glacier."
 interval = { ok = 200, late = 380 }
 gif = { hours = [12], days = 30 }

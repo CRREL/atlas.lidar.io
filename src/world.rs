@@ -51,6 +51,7 @@ impl World {
             cameras.push(DisplayCamera {
                 name: config.display_name.unwrap_or_else(|| camera.name().to_string()),
                 camera: camera.clone(),
+                description: config.description,
                 gif_url: config.gif
                     .as_ref()
                     .map(|_| format!("/gif/{}.gif", camera.name().to_string())),
@@ -109,6 +110,7 @@ impl World {
 struct DisplayCamera {
     name: String,
     camera: Camera,
+    description: String,
     gif_url: Option<String>,
     gif_days: Option<i64>,
 }
@@ -118,6 +120,7 @@ impl ToJson for DisplayCamera {
         let mut camera = Object::new();
         camera.insert("name".to_string(), self.name.to_json());
         camera.insert("camera".to_string(), self.camera.to_json());
+        camera.insert("description".to_string(), self.description.to_json());
         if let Some(ref url) = self.gif_url {
             let mut gif = Object::new();
             gif.insert("url".to_string(), url.to_json());

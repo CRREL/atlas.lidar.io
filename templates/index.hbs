@@ -90,7 +90,7 @@
         <div class="row">
           <div class="col-xs-12 camera-picker-thumbnails">
             {{#each cameras}}
-            <img src="{{camera.latest_image.url}}" class="img-rounded camera-picker-thumbnail" data-name="{{camera.name}}">
+            <img src="{{camera.latest_image.url}}" alt="{{description}}" class="img-rounded camera-picker-thumbnail" data-name="{{camera.name}}" title="{{description}}">
             {{/each}}
           </div>
         </div>
@@ -101,7 +101,7 @@
               {{#each cameras}}
               <div class="thumbnail camera-picker-image hidden" data-name="{{camera.name}}">
                 <a href="{{camera.latest_image.url}}">
-                  <img src="{{camera.latest_image.url}}">
+                  <img src="{{camera.latest_image.url}}" alt="{{description}}" title="{{description}}">
                 </a>
                 <div class="caption">{{name}} at {{camera.latest_image.datetime}}</div>
               </div>
@@ -111,7 +111,7 @@
               {{#each cameras}}
               <div class="thumbnail camera-picker-image hidden" data-name="{{camera.name}}">
                 <a href="{{gif.url}}">
-                  <img src="{{gif.url}}">
+                  <img src="{{gif.url}}" alt="{{description}}" title="{{description}}">
                 </a>
                 <div class="caption">{{name}} over the last {{gif.days}} days.</div>
               </div>

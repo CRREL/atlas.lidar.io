@@ -71,6 +71,7 @@ pub struct Heartbeat {
 pub struct Camera {
     pub display_name: Option<String>,
     pub directory: String,
+    pub description: String,
     pub name: Option<String>,
     pub url_path: Option<String>,
     pub interval: Interval,
