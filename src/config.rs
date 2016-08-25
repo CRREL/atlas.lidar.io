@@ -80,8 +80,8 @@ pub struct Camera {
 #[derive(Debug, RustcDecodable)]
 pub struct Gif {
     pub delay: i64,
-    pub height: usize,
-    pub width: usize,
+    pub height: u64,
+    pub width: u64,
     pub loop_gif: bool,
 }
 
