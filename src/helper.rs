@@ -96,7 +96,12 @@ mod utils {
     pub fn commas(n: u64) -> String {
         let mut bytes = n.to_string().into_bytes();
         bytes.reverse();
-        let mut chunks: Vec<_> = bytes.chunks(3).map(|b| String::from_utf8_lossy(b)).collect();
+        let mut chunks: Vec<_> = bytes.chunks_mut(3)
+            .map(|b| {
+                b.reverse();
+                String::from_utf8_lossy(b)
+            })
+            .collect();
         chunks.reverse();
         chunks.join(",")
     }
@@ -115,5 +120,7 @@ mod tests {
     fn commas_one_thousand_and_more() {
         assert_eq!("1,000", commas(1000));
         assert_eq!("1,000,000", commas(1000000));
+        assert_eq!("10,000,000", commas(10000000));
+        assert_eq!("100,000,000", commas(100000000));
     }
 }
