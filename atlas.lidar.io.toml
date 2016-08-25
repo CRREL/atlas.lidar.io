@@ -1,0 +1,55 @@
+[server]
+ip = "127.0.0.1"
+port = 3000
+static_directory = "/var/www/atlas.lidar.io/static"
+template_directory = "/var/www/atlas.lidar.io/templates"
+
+[heartbeat]
+directory = "/var/iridium"
+interval = { ok = 70, late = 130 }
+scan_interval = { ok = 420, late = 780 }
+
+[gif]
+delay = 500
+width = 742
+height = 557
+loop_gif = true
+
+[[camera]]
+directory = "/home/iridiumcam/StarDot/ATLAS_CAM"
+description = "One of two cameras located at the ATLAS site. This camera has been in place since system installation in 2015."
+interval = { ok = 1440, late = 2880 }
+gif = { hours = [12], days = 30 }
+
+[[camera]]
+directory = "/home/iridiumcam/StarDot/ATLAS_CAM2"
+name = "ATLAS_CAM2_StarDot1"
+description = "The other camera at the ATLAS site. This camera was installed in August 2016 and provides a closer view of the scanner."
+display_name = "ATLAS_CAM2"
+interval = { ok = 1440, late = 2880 }
+gif = { hours = [12], days = 30 }
+
+[[camera]]
+directory = "/home/iridiumcam/StarDot/HEL_DUAL/StarDot2"
+name = "HEL_DUAL_StarDot2"
+description = "One of two cameras located just downhill from the ATLAS site, pointing at the glacier. This camera captures the upstream view."
+url_path = "HEL_DUAL/StarDot2"
+display_name = "HEL_DUAL2"
+interval = { ok = 1440, late = 2880 }
+gif = { hours = [12], days = 30 }
+
+[[camera]]
+directory = "/home/iridiumcam/StarDot/HEL_DUAL/StarDot1"
+name = "HEL_DUAL_StarDot1"
+description = "The other camera located just downhill from the ATLAS site, pointing at the glacier. This camera captures the downstream view."
+url_path = "HEL_DUAL/StarDot1"
+display_name = "HEL_DUAL1"
+interval = { ok = 1440, late = 2880 }
+gif = { hours = [12], days = 30 }
+
+[[camera]]
+directory = "/home/iridiumcam/StarDot/HEL_MELANGE"
+name = "Hel_Melange"
+description = "This camera captures a view of the Helheim melange, the icy portion of the ocean just downstream of the glacier."
+interval = { ok = 1440, late = 2880 }
+gif = { hours = [12], days = 30 }
