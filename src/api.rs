@@ -18,8 +18,10 @@ pub struct Api {
 impl Api {
     pub fn new(world: World) -> Api {
         let mut router = Router::new();
-        router.get("/soc", CsvHandler::new(world.clone(), Soc));
-        router.get("/temperature", CsvHandler::new(world, Temperature));
+        router.get("/csv/soc", CsvHandler::new(world.clone(), Soc));
+        router.get("/csv/temperature",
+                   CsvHandler::new(world.clone(), Temperature));
+        router.get("/csv/pressure-rh", CsvHandler::new(world, PressureRh));
         Api { router: router }
     }
 }
@@ -95,5 +97,19 @@ impl Csv for Temperature {
             row.push_str(&format!("{:2}", scanner_on.scanner_temperature.0));
         }
         row
+    }
+}
+
+struct PressureRh;
+
+impl Csv for PressureRh {
+    fn header(&self) -> &str {
+        "Datetime,Pressure,Relative humidity"
+    }
+    fn row(&self, heartbeat: &Heartbeat) -> String {
+        format!("{},{:.1},{:.2}",
+                heartbeat.start_time,
+                heartbeat.pressure.0,
+                heartbeat.humidity.0)
     }
 }
