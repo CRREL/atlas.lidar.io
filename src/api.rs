@@ -91,8 +91,8 @@ impl Csv for Temperature {
                               heartbeat.external_temperature
                                   .map_or("".to_string(), |t| format!("{:.2}", t.0)),
                               heartbeat.mount_temperature.0);
-        if let Some(scan_on) = heartbeat.last_scan_on {
-            row.push_str(&format!("{:2}", scan_on.scanner_temperature.0));
+        if let Some(scanner_on) = heartbeat.last_scanner_on {
+            row.push_str(&format!("{:2}", scanner_on.scanner_temperature.0));
         }
         row
     }
