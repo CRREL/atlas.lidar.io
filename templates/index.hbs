@@ -53,8 +53,10 @@
             <dt>Timestamp</dt>
             <dd>{{start_time}}</dd>
 
+            {{#if external_temperature}}
             <dt>External temperature</dt>
             <dd>{{degrees-celsius external_temperature}}</dd>
+            {{/if}}
 
             <dt>Mount temperature</dt>
             <dd>{{degrees-celsius mount_temperature}}</dd>

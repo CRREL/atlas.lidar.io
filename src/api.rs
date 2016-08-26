@@ -86,9 +86,10 @@ impl Csv for Temperature {
         "Datetime,External,Mount,Scanner"
     }
     fn row(&self, heartbeat: &Heartbeat) -> String {
-        let mut row = format!("{},{},{},",
+        let mut row = format!("{},{},{:.2},",
                               heartbeat.start_time,
-                              heartbeat.external_temperature.0,
+                              heartbeat.external_temperature
+                                  .map_or("".to_string(), |t| format!("{:.2}", t.0)),
                               heartbeat.mount_temperature.0);
         if let Some(scan_on) = heartbeat.last_scan_on {
             row.push_str(&format!("{:2}", scan_on.scanner_temperature.0));
