@@ -1,8 +1,8 @@
 [server]
 ip = "127.0.0.1"
 port = 3000
-static_directory = "/var/www/atlas.lidar.io/static"
 template_directory = "/var/www/atlas.lidar.io/templates"
+# no static directory, since we serve static files through Apache
 
 [heartbeat]
 directory = "/var/iridium"

@@ -56,7 +56,7 @@ impl Config {
 pub struct Server {
     pub ip: String,
     pub port: u16,
-    pub static_directory: String,
+    pub static_directory: Option<String>,
     pub template_directory: String,
 }
 

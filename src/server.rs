@@ -49,7 +49,9 @@ impl Server {
         let addr = SocketAddr::new(ip, config.port);
 
         let mut mount = Mount::new();
-        mount.mount("/static/", Static::new(&config.static_directory));
+        if let Some(static_directory) = config.static_directory {
+            mount.mount("/static/", Static::new(&static_directory));
+        }
         mount.mount("/api/v1/", Api::new(world.clone()));
         mount.mount("/gif/", Gif::new(world.clone()));
         mount.mount("/", Index::new(world.clone()));
