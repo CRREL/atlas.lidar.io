@@ -8,6 +8,7 @@ def deploy():
     local("cargo build")
     local("cargo test")
     with cd("/var/www/atlas.lidar.io"):
+        run("git checkout master")
         run("git pull")
         run("cargo build --release")
         sudo("supervisorctl restart atlas.lidar.io")
