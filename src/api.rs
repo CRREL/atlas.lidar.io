@@ -107,9 +107,10 @@ impl Csv for PressureRh {
         "Datetime,Pressure,Relative humidity"
     }
     fn row(&self, heartbeat: &Heartbeat) -> String {
-        format!("{},{:.1},{:.2}",
-                heartbeat.start_time,
-                heartbeat.pressure.0,
-                heartbeat.humidity.0)
+        let mut row = format!("{},{:.1},", heartbeat.start_time, heartbeat.pressure.0);
+        if let Some(humidity) = heartbeat.humidity {
+            row.push_str(&format!("{:2}", humidity.0));
+        }
+        row
     }
 }
