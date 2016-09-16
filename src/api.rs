@@ -100,17 +100,14 @@ impl Csv for Temperature {
     }
 }
 
+// RH is removed for the moment b/c it's crap in V2
 struct PressureRh;
 
 impl Csv for PressureRh {
     fn header(&self) -> &str {
-        "Datetime,Pressure,Relative humidity"
+        "Datetime,Pressure"
     }
     fn row(&self, heartbeat: &Heartbeat) -> String {
-        let mut row = format!("{},{:.1},", heartbeat.start_time, heartbeat.pressure.0);
-        if let Some(humidity) = heartbeat.humidity {
-            row.push_str(&format!("{:2}", humidity.0));
-        }
-        row
+        format!("{},{:.1}", heartbeat.start_time, heartbeat.pressure.0)
     }
 }

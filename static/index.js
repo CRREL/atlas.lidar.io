@@ -60,7 +60,7 @@ var temperature_graph = new Dygraph(document.getElementById("temperature-graph")
     }
 });
 
-var temperature_graph = new Dygraph(document.getElementById("pressure-rh-graph"), "/api/v1/csv/pressure-rh", {
+var pressure_rh_graph = new Dygraph(document.getElementById("pressure-rh-graph"), "/api/v1/csv/pressure-rh", {
     dateWindow: [Date.now() - 2 * 30 * 24 * 60 * 60 * 1000, Date.now()],
     height: 300,
     labelsUTC: true,
@@ -76,4 +76,4 @@ var temperature_graph = new Dygraph(document.getElementById("pressure-rh-graph")
     y2label: "Relative humidity (%)"
 });
 
-var _ = Dygraph.synchronize(soc_graph, temperature_graph, { range: false });
+var _ = Dygraph.synchronize(soc_graph, temperature_graph, pressure_rh_graph, { range: false });
