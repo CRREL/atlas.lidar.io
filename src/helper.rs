@@ -28,7 +28,7 @@ pub fn percentage(_: &Context,
                   rc: &mut RenderContext)
                   -> Result<(), RenderError> {
     let percentage = h.param(0).unwrap().value().as_f64().unwrap();
-    try!(write!(rc.writer, "{:.2} %", percentage));
+    try!(write!(rc.writer, "{:.1} %", percentage));
     Ok(())
 }
 
