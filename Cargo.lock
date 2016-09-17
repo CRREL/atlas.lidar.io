@@ -158,7 +158,7 @@ dependencies = [
 [[package]]
 name = "heartbeat"
 version = "0.1.0"
-source = "git+https://github.com/glacio/heartbeat.git#8f17e15b4d02d6dbb975c12acd6bef80069ceaec"
+source = "git+https://github.com/glacio/heartbeat.git#3e5400b4a1e4fa5ad9ad59f73557d410bfe36d84"
 dependencies = [
  "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
