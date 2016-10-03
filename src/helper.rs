@@ -1,3 +1,4 @@
+use chrono::{TimeZone, UTC};
 use handlebars::{Context, Handlebars, Helper, HelperDef, RenderContext, RenderError};
 use heartbeat::units::{OrionPercentage, Percentage};
 use rustc_serialize::json::{Json, Object, ToJson};
@@ -90,6 +91,33 @@ impl HelperDef for BatteryCharge {
                     try!(handlebars.render("progress-bar", &self.progress_bar_data(soc.0)))));
         Ok(())
     }
+}
+
+pub fn efoy(_: &Context,
+            h: &Helper,
+            _: &Handlebars,
+            rc: &mut RenderContext)
+            -> Result<(), RenderError> {
+    if let Some(action) = h.param(0).and_then(|p| p.value().as_object()) {
+        let system_reset = UTC.ymd(2016, 8, 13).and_hms(0, 0, 0);
+        let mut datetime =
+            UTC.datetime_from_str(action.get("datetime").unwrap().as_string().unwrap(),
+                                   "%Y-%m-%d %H:%M:%S UTC")
+                .unwrap();
+        let mut name = action.get("name").unwrap().as_string().unwrap();
+        if datetime < system_reset {
+            datetime = system_reset;
+            name = "success";
+        }
+        let name = match name {
+            "success" => "Not charging",
+            "start" => "Charging",
+            "failure" => "Failure",
+            _ => name,
+        };
+        try!(write!(rc.writer, "{} as of {}", name, datetime));
+    }
+    Ok(())
 }
 
 mod utils {

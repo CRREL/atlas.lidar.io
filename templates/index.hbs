@@ -38,15 +38,21 @@
 
       <div class="row">
           {{#with heartbeat}}
-        <div class="col-sm-3 col-xs-12">
+        <div class="col-md-4 col-xs-12">
           <h3>Battery 1</h3>
           {{battery-charge soc1}}
 
           <h3>Battery 2</h3>
           {{battery-charge soc2}}
+
+          <h3>EFOY 1</h3>
+          {{efoy last_efoy1_action}}
+
+          <h3>EFOY 2</h3>
+          {{efoy last_efoy2_action}}
         </div>
 
-        <div class="col-xs-12 col-md-4 col-md-offset-1">
+        <div class="col-xs-12 col-md-3 col-md-offset-1">
           <h2>Last heartbeat</h2>
 
           <dl>

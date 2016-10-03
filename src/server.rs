@@ -73,6 +73,7 @@ impl Server {
                                          green_floor: 70.,
                                          yellow_floor: 50.,
                                      }));
+            registry.register_helper("efoy", Box::new(helper::efoy));
         }
         chain.link_after(maybe_watch_handlebars_engine(&config.template_directory,
                                                        handlebars_engine));
