@@ -73,16 +73,7 @@
         <div class="col-xs-12 col-md-4">
           <h2>Last scan</h2>
 
-          <dl>
-            <dt>Start time</dt>
-            <dd>{{last_scan.start}}</dd>
-
-            <dt>End time</dt>
-            <dd>{{last_scan.end}}</dd>
-
-            <dt>Number of points</dt>
-            <dd>{{commas last_scan.detail.num_points}}</dd>
-          </dl>
+          {{last_scan_detail last_scan}}
         </div>
         {{/with}}
       </div>

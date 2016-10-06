@@ -74,6 +74,7 @@ impl Server {
                                          yellow_floor: 50.,
                                      }));
             registry.register_helper("efoy", Box::new(helper::efoy));
+            registry.register_helper("last_scan_detail", Box::new(helper::last_scan_detail));
         }
         chain.link_after(maybe_watch_handlebars_engine(&config.template_directory,
                                                        handlebars_engine));

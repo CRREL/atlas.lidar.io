@@ -120,6 +120,32 @@ pub fn efoy(_: &Context,
     Ok(())
 }
 
+pub fn last_scan_detail(_: &Context,
+                        h: &Helper,
+                        handlebars: &Handlebars,
+                        rc: &mut RenderContext)
+                        -> Result<(), RenderError> {
+    if let Some(scan) = h.param(0).and_then(|p| p.value().as_object()) {
+        // TODO factor out parsing these strings
+        let start = UTC.datetime_from_str(scan.get("start").unwrap().as_string().unwrap(),
+                               "%Y-%m-%d %H:%M:%S UTC")
+            .unwrap();
+        let end = UTC.datetime_from_str(scan.get("end").unwrap().as_string().unwrap(),
+                               "%Y-%m-%d %H:%M:%S UTC")
+            .unwrap();
+        if end < start {
+            try!(write!(rc.writer,
+                        "{}",
+                        try!(handlebars.render("last-scan-abort", scan))));
+        } else {
+            try!(write!(rc.writer,
+                        "{}",
+                        try!(handlebars.render("last-scan-ok", scan))));
+        }
+    }
+    Ok(())
+}
+
 mod utils {
     pub fn commas(n: u64) -> String {
         let mut bytes = n.to_string().into_bytes();
