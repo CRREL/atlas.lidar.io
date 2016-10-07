@@ -37,6 +37,10 @@ body {
   background-color: #ccc;
 }
 
+.status-report li.status-report-aborted {
+  background-color: #f2dede;
+}
+
 .status-report .glyphicon {
   margin-top: 5px;
   margin-bottom: 10px;

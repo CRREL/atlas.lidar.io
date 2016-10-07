@@ -96,8 +96,19 @@ impl World {
                                                self.intervals["heartbeat"])));
         status.push(Component::new("Scan",
                                    SCAN_DESCRIPTION,
-                                   Status::new(heartbeat.map(|h| h.last_scan.start),
-                                               self.intervals["scan"])));
+                                   match Status::new(heartbeat.map(|h| h.last_scan.start),
+                                                     self.intervals["scan"]) {
+                                       Status::Ok => {
+                                           let last_scan = heartbeat.unwrap().last_scan;
+                                           if last_scan.end
+                                               .map_or(false, |end| end < last_scan.start) {
+                                               Status::Aborted
+                                           } else {
+                                               Status::Ok
+                                           }
+                                       }
+                                       s @ _ => s,
+                                   }));
         for display_camera in &self.display_cameras {
             let interval = self.intervals[display_camera.camera.name()];
             status.push(Component::new(&display_camera.name,
@@ -168,6 +179,7 @@ enum Status {
     Late,
     Stopped,
     Missing,
+    Aborted,
 }
 
 impl Status {
@@ -196,6 +208,7 @@ impl ToJson for Status {
                               Status::Late => "late",
                               Status::Stopped => "stopped",
                               Status::Missing => "missing",
+                              Status::Aborted => "aborted",
                           }
                           .to_json());
         status.insert("glyphicon".to_string(),
@@ -204,6 +217,7 @@ impl ToJson for Status {
                               Status::Late => "time",
                               Status::Stopped => "remove",
                               Status::Missing => "flag",
+                              Status::Aborted => "flag",
                           }
                           .to_json());
         Json::Object(status)
