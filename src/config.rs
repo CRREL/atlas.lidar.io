@@ -65,6 +65,7 @@ pub struct Heartbeat {
     pub directory: String,
     pub interval: Interval,
     pub scan_interval: Interval,
+    pub winterize: bool,
 }
 
 #[derive(Debug, RustcDecodable)]

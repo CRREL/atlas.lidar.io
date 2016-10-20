@@ -20,6 +20,7 @@ pub struct World {
     heartbeat_watcher: watch::Heartbeat,
     pub heartbeats: Arc<RwLock<Vec<Heartbeat>>>,
     intervals: HashMap<String, config::Interval>,
+    winterize: bool,
 }
 
 impl World {
@@ -75,6 +76,7 @@ impl World {
             heartbeats: heartbeat_watcher.heartbeats(),
             heartbeat_watcher: heartbeat_watcher,
             intervals: intervals,
+            winterize: heartbeat_config.winterize,
         })
     }
 
@@ -232,6 +234,7 @@ impl ToJson for World {
             world.insert("heartbeat".to_string(), heartbeat.to_json());
         }
         world.insert("cameras".to_string(), self.display_cameras.to_json());
+        world.insert("winterize".to_string(), self.winterize.to_json());
         Json::Object(world)
     }
 }
