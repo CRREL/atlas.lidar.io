@@ -8,6 +8,7 @@ template_directory = "/var/www/atlas.lidar.io/templates"
 directory = "/var/iridium"
 interval = { ok = 70, late = 130 }
 scan_interval = { ok = 420, late = 780 }
+winterize = true
 
 [gif]
 delay = 500
