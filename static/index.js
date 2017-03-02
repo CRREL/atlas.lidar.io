@@ -5,7 +5,7 @@ $(".camera-picker-thumbnail").click(function() {
     $(".camera-picker-image").addClass("hidden");
     $(".camera-picker-image[data-name=" + name + "]").removeClass("hidden");
 });
-$(".camera-picker-thumbnail")[1].click();
+$(".camera-picker-thumbnail")[0].click();
 
 $(".camera-picker-animate").click(function() {
     if ($(this).data("animate")) {
