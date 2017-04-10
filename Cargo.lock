@@ -104,10 +104,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "camera"
 version = "0.1.0"
-source = "git+https://github.com/glacio/camera.git#e8ccbf25c06e7915876a679fe5d7017a119171ac"
+source = "git+https://github.com/glacio/camera.git#d095722cfdc814fe351293a3f86ba9857bef7ad8"
 dependencies = [
  "chrono 0.2.25 (registry+https://github.com/rust-lang/crates.io-index)",
- "magick_rust 0.6.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "magick_rust 0.6.4 (git+https://github.com/nlfiedler/magick-rust)",
  "rustc-serialize 0.3.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "url 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -403,7 +403,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "magick_rust"
 version = "0.6.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+source = "git+https://github.com/nlfiedler/magick-rust#4a5b6935edf7bba0d89a338ae7574a0634b45b7d"
 dependencies = [
  "bindgen 0.22.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.21 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1118,7 +1118,7 @@ dependencies = [
 "checksum libc 0.2.21 (registry+https://github.com/rust-lang/crates.io-index)" = "88ee81885f9f04bff991e306fea7c1c60a5f0f9e409e99f6b40e3311a3363135"
 "checksum libloading 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "0a020ac941774eb37e9d13d418c37b522e76899bfc4e7b1a600d529a53f83a66"
 "checksum log 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)" = "5141eca02775a762cc6cd564d8d2c50f67c0ea3a372cbf1c51592b3e029e10ad"
-"checksum magick_rust 0.6.4 (registry+https://github.com/rust-lang/crates.io-index)" = "728d34a2ea4c86873ab37031c4992bedeb58681f49245f2054c3fffc2e61b712"
+"checksum magick_rust 0.6.4 (git+https://github.com/nlfiedler/magick-rust)" = "<none>"
 "checksum matches 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "efd7622e3022e1a6eaa602c4cea8912254e5582c9c692e9167714182244801b1"
 "checksum memchr 0.1.11 (registry+https://github.com/rust-lang/crates.io-index)" = "d8b629fb514376c675b98c1421e80b151d3817ac42d7c667717d282761418d20"
 "checksum memchr 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1dbccc0e46f1ea47b9f17e6d67c5a96bd27030519c519c9c91327e31275a47b4"
