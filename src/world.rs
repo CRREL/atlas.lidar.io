@@ -53,14 +53,15 @@ impl World {
             }
             intervals.insert(camera.name().to_string(), config.interval);
             cameras.push(DisplayCamera {
-                name: config.display_name.unwrap_or_else(|| camera.name().to_string()),
-                camera: camera.clone(),
-                description: config.description,
-                gif_url: config.gif
-                    .as_ref()
-                    .map(|_| format!("/gif/{}.gif", camera.name().to_string())),
-                gif_days: config.gif.as_ref().map(|c| c.days),
-            });
+                             name: config.display_name.unwrap_or_else(|| camera.name().to_string()),
+                             camera: camera.clone(),
+                             description: config.description,
+                             gif_url: config.gif.as_ref().map(|_| {
+                                                                  format!("/gif/{}.gif",
+                                                                          camera.name().to_string())
+                                                              }),
+                             gif_days: config.gif.as_ref().map(|c| c.days),
+                         });
             if let Some(gif_config) = config.gif {
                 let name = camera.name().to_string();
                 let watcher = watch::Gif::new(gif, camera, gif_config.hours, gif_config.days);
@@ -70,14 +71,14 @@ impl World {
         }
 
         Ok(World {
-            display_cameras: cameras,
-            gifs: gifs,
-            gif_watchers: gif_watchers,
-            heartbeats: heartbeat_watcher.heartbeats(),
-            heartbeat_watcher: heartbeat_watcher,
-            intervals: intervals,
-            winterize: heartbeat_config.winterize,
-        })
+               display_cameras: cameras,
+               gifs: gifs,
+               gif_watchers: gif_watchers,
+               heartbeats: heartbeat_watcher.heartbeats(),
+               heartbeat_watcher: heartbeat_watcher,
+               intervals: intervals,
+               winterize: heartbeat_config.winterize,
+           })
     }
 
     pub fn serve(self) {
@@ -101,14 +102,13 @@ impl World {
                                    match Status::new(heartbeat.map(|h| h.last_scan.start),
                                                      self.intervals["scan"]) {
                                        Status::Ok => {
-                                           let last_scan = heartbeat.unwrap().last_scan;
-                                           if last_scan.end
-                                               .map_or(false, |end| end < last_scan.start) {
-                                               Status::Aborted
-                                           } else {
-                                               Status::Ok
-                                           }
-                                       }
+            let last_scan = heartbeat.unwrap().last_scan;
+            if last_scan.end.map_or(false, |end| end < last_scan.start) {
+                Status::Aborted
+            } else {
+                Status::Ok
+            }
+        }
                                        s @ _ => s,
                                    }));
         for display_camera in &self.display_cameras {
@@ -230,7 +230,10 @@ impl ToJson for World {
     fn to_json(&self) -> Json {
         let mut world = Object::new();
         world.insert("status".to_string(), self.status().to_json());
-        if let Some(heartbeat) = self.heartbeats.read().unwrap().last() {
+        if let Some(heartbeat) = self.heartbeats
+               .read()
+               .unwrap()
+               .last() {
             world.insert("heartbeat".to_string(), heartbeat.to_json());
         }
         world.insert("cameras".to_string(), self.display_cameras.to_json());

@@ -21,9 +21,9 @@ impl Decodable for Interval {
             let ok = try!(d.read_struct_field("ok", 0, |d| d.read_i64()));
             let late = try!(d.read_struct_field("late", 0, |d| d.read_i64()));
             Ok(Interval {
-                ok: Duration::minutes(ok),
-                late: Duration::minutes(late),
-            })
+                   ok: Duration::minutes(ok),
+                   late: Duration::minutes(late),
+               })
         })
     }
 }
@@ -82,8 +82,8 @@ pub struct Camera {
 #[derive(Debug, RustcDecodable)]
 pub struct Gif {
     pub delay: i64,
-    pub height: u64,
-    pub width: u64,
+    pub height: usize,
+    pub width: usize,
     pub loop_gif: bool,
 }
 
