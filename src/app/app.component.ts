@@ -11,6 +11,7 @@ import { Camera } from "./camera";
 export class AppComponent {
   title = "ATLAS";
   cameras: Camera[];
+  selectedCamera: Camera;
 
   constructor(private cameraService: CameraService) { }
 
@@ -20,5 +21,9 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.getCameras();
+  }
+
+  onSelect(camera: Camera): void {
+    this.selectedCamera = camera;
   }
 }

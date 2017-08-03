@@ -1,6 +1,10 @@
 <h1>{{title}}</h1>
 <ul class="cameras">
-    <li *ngFor="let camera of cameras">
+    <li *ngFor="let camera of cameras"
+        [class.selected]="camera == selectedCamera"
+        (click)="onSelect(camera)"
+        >
         {{camera.name}}
     </li>
 </ul>
+<camera-detail [camera]="selectedCamera"></camera-detail>
