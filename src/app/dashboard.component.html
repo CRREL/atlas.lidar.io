@@ -1,0 +1,7 @@
+<div>
+    <a *ngFor="let camera of cameras" [routerLink]="['/cameras', camera.name]">
+        <div>
+            <h4>{{camera.name}}</h4>
+        </div>
+    </a>
+</div>
