@@ -16,6 +16,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.cameraService.getCameras()
-      .then(cameras => this.cameras = cameras as Camera[]);
+      .then(cameras => this.cameras = cameras);
   }
 }

@@ -6,6 +6,7 @@ import { AppComponent } from "./app.component";
 import { CameraDetailComponent } from "./camera-detail.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { DashboardComponent } from "./dashboard.component";
+import { AtlasService } from "./atlas.service";
 import { CameraService } from "./camera.service";
 
 @NgModule({
@@ -19,7 +20,7 @@ import { CameraService } from "./camera.service";
     BrowserModule,
     HttpModule,
   ],
-  providers: [HttpModule, CameraService],
+  providers: [HttpModule, AtlasService, CameraService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

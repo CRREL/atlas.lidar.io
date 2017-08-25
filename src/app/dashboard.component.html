@@ -1,14 +1,16 @@
 <h1>Dashboard</h1>
 
+<div *ngIf="atlasStatus">
+    {{atlasStatus.soc1}}
+</div>
+
 <h2>Cameras</h2>
 
 <div class="row">
     <div *ngFor="let camera of cameras" class="col-6">
         <div class="card">
-            <img class="card-img-top img-responsive" src="{{camera.latest_image.url}}" alt="Latest image from {{camera.name}}">
             <div class="card-block">
                 <h4 class="card-title">{{camera.name}}</h4>
-                <h6 class="card-subtitle mb-2 text-muted">Latest image taken: {{camera.latest_image.datetime}}</h6>
                 <p class="card-text">{{camera.description}}</p>
                 <a [routerLink]="['/cameras', camera.name]" class="card-link">Detail</a>
             </div>
