@@ -2,18 +2,5 @@
 
 <div *ngIf="atlasStatus">
     {{atlasStatus.soc1}}
-</div>
-
-<h2>Cameras</h2>
-
-<div class="row">
-    <div *ngFor="let camera of cameras" class="col-6">
-        <div class="card">
-            <div class="card-block">
-                <h4 class="card-title">{{camera.name}}</h4>
-                <p class="card-text">{{camera.description}}</p>
-                <a [routerLink]="['/cameras', camera.name]" class="card-link">Detail</a>
-            </div>
-        </div>
-    </div>
+    {{atlasStatus.last_heartbeat_received}}
 </div>
