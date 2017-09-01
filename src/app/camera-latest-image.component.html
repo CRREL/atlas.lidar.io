@@ -1,0 +1,7 @@
+<figure class="figure">
+    <img src="{{camera.latest_image.url}}" class="img-fluid figure-img" alt="The latest image from {{camera.name}}.">
+    <figcaption class="figure-caption">
+        The latest image from {{camera.name}}, taken {{camera.latest_image.datetime | date:"medium"}}.
+        {{camera.description}}
+    </figcaption>
+</figure>

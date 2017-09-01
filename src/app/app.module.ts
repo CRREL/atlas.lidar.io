@@ -8,6 +8,8 @@ import { DashboardComponent } from "./dashboard.component";
 import { StateOfChargeBgPipe } from "./state-of-charge-bg.pipe";
 import { AtlasService } from "./atlas.service";
 import { AtlasPowerComponent } from "./atlas-power.component";
+import { CameraLatestImageComponent } from "./camera-latest-image.component";
+import { CameraService } from "./camera.service";
 
 @NgModule({
   declarations: [
@@ -15,13 +17,14 @@ import { AtlasPowerComponent } from "./atlas-power.component";
     AtlasPowerComponent,
     DashboardComponent,
     StateOfChargeBgPipe,
+    CameraLatestImageComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     HttpModule,
   ],
-  providers: [HttpModule, AtlasService],
+  providers: [HttpModule, AtlasService, CameraService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
