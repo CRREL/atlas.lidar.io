@@ -1,6 +1,5 @@
 <h1>Dashboard</h1>
 
 <div *ngIf="atlasStatus">
-    {{atlasStatus.soc1}}
-    {{atlasStatus.last_heartbeat_received}}
+    <p>ATLAS status as of {{atlasStatus.last_heartbeat_received | date:"medium" }}.</p>
 </div>
