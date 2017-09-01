@@ -7,10 +7,12 @@ import { AppRoutingModule } from "./app-routing.module";
 import { DashboardComponent } from "./dashboard.component";
 import { StateOfChargeBgPipe } from "./state-of-charge-bg.pipe";
 import { AtlasService } from "./atlas.service";
+import { AtlasPowerComponent } from "./atlas-power.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    AtlasPowerComponent,
     DashboardComponent,
     StateOfChargeBgPipe,
   ],
