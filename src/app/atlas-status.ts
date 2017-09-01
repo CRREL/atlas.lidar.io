@@ -1,5 +1,6 @@
-export class AtlasStatus {
-    last_heartbeat_received: Date;
-    soc1: number;
-    soc2: number;
+import { AtlasBattery } from "./atlas-battery";
+
+export interface AtlasStatus {
+  last_heartbeat_received: Date;
+  batteries: AtlasBattery[];
 }

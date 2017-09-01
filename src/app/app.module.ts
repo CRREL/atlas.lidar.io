@@ -3,24 +3,23 @@ import { NgModule } from "@angular/core";
 import { HttpModule } from "@angular/http";
 
 import { AppComponent } from "./app.component";
-import { CameraDetailComponent } from "./camera-detail.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { DashboardComponent } from "./dashboard.component";
+import { StateOfChargeBgPipe } from "./state-of-charge-bg.pipe";
 import { AtlasService } from "./atlas.service";
-import { CameraService } from "./camera.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    CameraDetailComponent,
     DashboardComponent,
+    StateOfChargeBgPipe,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     HttpModule,
   ],
-  providers: [HttpModule, AtlasService, CameraService],
+  providers: [HttpModule, AtlasService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

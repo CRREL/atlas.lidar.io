@@ -1,5 +1,17 @@
-<h1>Dashboard</h1>
-
 <div *ngIf="atlasStatus">
-    <p>ATLAS status as of {{atlasStatus.last_heartbeat_received | date:"medium" }}.</p>
+    <p>This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}.</p>
+
+    <h2>Power</h2>
+
+    <div class="row">
+        <div class="col" *ngFor="let battery of atlasStatus.batteries">
+            <p>Battery {{battery.id}} state of charge is {{battery.state_of_charge / 100 | percent:'1.1-1'}}.</p>
+
+            <div class="progress">
+                <div
+                    class="progress-bar {{battery.state_of_charge | stateOfChargeBg}}"
+                    [ngStyle]="{'width.%': battery.state_of_charge}"></div>
+            </div>
+        </div>
+    </div>
 </div>
