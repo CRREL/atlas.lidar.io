@@ -3,7 +3,16 @@
 
     <h2>Power</h2>
 
-    <div class="row">
+    <p>
+    ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
+    During the summer months, the solar supply provides more than enough power for the system.
+    As the sun descends during the shoulder seasons, the EFOY fuel cells will take over and provide power into the winter.
+    </p>
+
+    <div class="row my-5">
+        <div class="col-md-2">
+            <h4>Batteries</h4>
+        </div>
         <div class="col" *ngFor="let battery of atlasStatus.batteries">
             <p>Battery {{battery.id}} state of charge is {{battery.state_of_charge / 100 | percent:'1.1-1'}}.</p>
 
@@ -12,6 +21,15 @@
                     class="progress-bar {{battery.state_of_charge | stateOfChargeBg}}"
                     [ngStyle]="{'width.%': battery.state_of_charge}"></div>
             </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col-md-2">
+            <h4>EFOYs</h4>
+        </div>
+        <div class="col" *ngFor="let efoy of atlasStatus.efoys">
+            <p>Efoy {{efoy.id}} is in {{efoy.state}} mode. It has used {{efoy.consumed}} liters of cartridge {{efoy.cartridge}}.</p>
         </div>
     </div>
 
