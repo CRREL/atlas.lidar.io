@@ -14,7 +14,7 @@ def deploy():
 
 @task
 def build():
-    local("ng build")
+    local("ng build -prod")
 
 
 @task
