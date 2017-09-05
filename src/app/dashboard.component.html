@@ -9,11 +9,11 @@
     As the sun descends during the shoulder seasons, the EFOY fuel cells take over and provide power into the winter.
     </p>
 
-    <div class="row my-5">
+    <div class="row my-3">
         <div class="col-md-2">
             <h4>Batteries</h4>
         </div>
-        <div class="col" *ngFor="let battery of atlasStatus.batteries">
+        <div class="col-md mb-3" *ngFor="let battery of atlasStatus.batteries">
             <p>Battery {{battery.id}} state of charge is {{battery.state_of_charge / 100 | percent:'1.1-1'}}.</p>
 
             <div class="progress">
@@ -24,11 +24,11 @@
         </div>
     </div>
 
-    <div class="row my-5">
+    <div class="row my-3">
         <div class="col-md-2">
             <h4>EFOYs</h4>
         </div>
-        <div class="col" *ngFor="let efoy of atlasStatus.efoys">
+        <div class="col-md" *ngFor="let efoy of atlasStatus.efoys">
             <p>Efoy {{efoy.id}} is in {{efoy.state}} mode. It has used {{efoy.consumed}} liters of cartridge {{efoy.cartridge}}.</p>
         </div>
     </div>
