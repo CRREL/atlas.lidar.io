@@ -32,17 +32,68 @@
             <p>Efoy {{efoy.id}} is in {{efoy.state}} mode. It has used {{efoy.consumed}} liters of cartridge {{efoy.cartridge}}.</p>
         </div>
     </div>
+</div>
 
-    <atlas-power></atlas-power>
+<atlas-power></atlas-power>
 
-    <h2>Cameras</h2>
+<h2>Cameras</h2>
 
-    <div class="row">
-        <div class="col">
-            <camera-latest-image [name]="'ATLAS_CAM'"></camera-latest-image>
-        </div>
-        <div class="col">
-            <camera-latest-image [name]="'ATLAS_CAM2'"></camera-latest-image>
-        </div>
+<div class="row">
+    <div class="col">
+        <camera-latest-image [name]="'ATLAS_CAM'"></camera-latest-image>
+    </div>
+    <div class="col">
+        <camera-latest-image [name]="'ATLAS_CAM2'"></camera-latest-image>
     </div>
 </div>
+
+<h2>Videos</h2>
+
+<p>This video was filmed by a UAS system after ATLAS installation in the summer of 2015.</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+    <video class="embed-responsive-item" controls="">
+        <source src="http://atlas.lidar.io/static/ATLAS_082016_ZoomOut_720.mov">
+            Your browser does not support the video tag.
+    </video>
+</div>
+
+<h2 class="mt-5">Support</h2>
+
+<p>
+    ATLAS was built and is maintained by a team at the RS/GIS Center of Expertise, located at the CRREL in Hanover, NH, along with our scientific partners at the University of Maine and the University of Kansas.
+    Financial support is provided by the Heising-Simons Foundation.
+</p>
+
+<div class="row justify-content-center">
+    <div class="col-3">
+        <a href="http://www.erdc.usace.army.mil/Locations/CRREL.aspx">
+            <img class="img-fluid" src="/assets/rsgis.png">
+        </a>
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="col-5">
+        <a href="http://www.heisingsimons.org/">
+            <img class="img-fluid" src="/assets/heising-simons.jpg">
+        </a>
+    </div>
+    <div class="col-2">
+        <a href="http://stearns.dept.ku.edu">
+            <img class="img-fluid" src="/assets/ku.png">
+        </a>
+    </div>
+    <div class="col-4">
+        <a href="http://climatechange.umaine.edu/glaciology/index.html">
+            <img class="img-fluid" src="/assets/umaine.png">
+        </a>
+    </div>
+</div>
+
+<h2 class="mt-5">More information</h2>
+
+<p>
+This website is created with <a href="https://angular.io/">Angular</a> and is based on an HTTP API written in <a href="https://www.rust-lang.org/en-US/">Rust</a>.
+For more information, or to request source data, please email Pete Gadomski at peter dot j dot gadomski at erdc dot dren dot mil.
+</p>
