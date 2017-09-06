@@ -5,10 +5,25 @@
     </div>
 </div>
 <div class="container">
-    <div *ngIf="atlasStatus">
-        <p>This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}. All times on this page are in your browser's local time zone.</p>
+    <div class="row mb-3 justify-content-center align-items-center">
+        <div class="col-1">
+            <img class="img-fluid" src="/assets/rsgis.png">
+        </div>
+        <div class="col-3">
+            <img class="img-fluid" src="/assets/heising-simons.jpg">
+        </div>
+        <div class="col-1">
+            <img class="img-fluid" src="/assets/ku.png">
+        </div>
+        <div class="col-2">
+            <img class="img-fluid" src="/assets/umaine.png">
+        </div>
+    </div>
 
+    <div *ngIf="atlasStatus">
         <h2>Power</h2>
+
+        <p>This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}. All times on this page are in your browser's local time zone.</p>
 
         <p>
         ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
