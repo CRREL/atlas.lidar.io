@@ -8,6 +8,7 @@ import { DashboardComponent } from "./dashboard.component";
 import { StateOfChargeBgPipe } from "./state-of-charge-bg.pipe";
 import { AtlasService } from "./atlas.service";
 import { AtlasPowerComponent } from "./atlas-power.component";
+import { HelBergcamComponent } from "./hel-bergcam.component";
 import { CameraLatestImageComponent } from "./camera-latest-image.component";
 import { CameraService } from "./camera.service";
 
@@ -16,6 +17,7 @@ import { CameraService } from "./camera.service";
     AppComponent,
     AtlasPowerComponent,
     DashboardComponent,
+    HelBergcamComponent,
     StateOfChargeBgPipe,
     CameraLatestImageComponent,
   ],
