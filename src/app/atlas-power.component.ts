@@ -13,7 +13,7 @@ import * as d3_scale_chromatic from "d3-scale-chromatic";
 export class AtlasPowerComponent implements OnInit {
   @ViewChild('atlasPowerChart') private chartContainer: ElementRef;
   history: AtlasPowerHistory;
-  private margin: any = { top: 20, bottom: 20, left: 40, right: 20 };
+  private margin: any = { top: 20, bottom: 20, left: 30, right: 20 };
 
   constructor(private atlasService: AtlasService) { }
 
@@ -36,11 +36,11 @@ export class AtlasPowerComponent implements OnInit {
     ];
     const efoys = [{
       name: "EFOY 1",
-      values: this.datifyEfoyRecord(this.history.efoy_1_current),
+      values: this.datifyEfoyRecord(this.history.efoy_1_fuel, this.history.efoy_1_current),
     },
     {
       name: "EFOY 2",
-      values: this.datifyEfoyRecord(this.history.efoy_2_current),
+      values: this.datifyEfoyRecord(this.history.efoy_2_fuel, this.history.efoy_2_current),
     }];
     const element = this.chartContainer.nativeElement;
     const width = element.offsetWidth - this.margin.left - this.margin.right;
@@ -52,19 +52,22 @@ export class AtlasPowerComponent implements OnInit {
 
     const g = svg.append("g").attr("transform", `translate(${this.margin.left},${this.margin.top})`);
     const xScale = d3.scaleTime().domain(d3.extent(this.history.datetime)).range([0, width]);
-    const yScaleBattery = d3.scaleLinear().domain([0, 100]).rangeRound([height, 0]);
-    const yScaleEfoy = d3.scaleLinear().domain([0, 4]).rangeRound([height, 0]);
+    const yScale = d3.scaleLinear().domain([0, 100]).rangeRound([height, 0]);
     const zScaleBatteries = d3.scaleOrdinal(d3_scale_chromatic.schemePaired).domain(batteries.map(b => b.name));
     const zScaleEfoys = d3.scaleOrdinal(d3_scale_chromatic.schemePastel1).domain(efoys.map(b => b.name));
     const line = d3.line<PowerRecord>()
       .curve(d3.curveBasis)
       .x(d => xScale(d.datetime))
-      .y(d => yScaleBattery(d.state_of_charge));
+      .y(d => yScale(d.state_of_charge));
+    const efoyLine = d3.line<EfoyRecord>()
+      .curve(d3.curveBasis)
+      .x(d => xScale(d.datetime))
+      .y(d => yScale(d.fuel * 100.0));
     const area = d3.area<EfoyRecord>()
       .curve(d3.curveBasis)
       .x(d => xScale(d.datetime))
-      .y0(yScaleEfoy(0))
-      .y1(d => yScaleEfoy(d.current));
+      .y0(yScale(0))
+      .y1(d => yScale(100 * d.current / 4.0));
 
     var efoy = g.selectAll(".efoy")
       .data(efoys)
@@ -76,6 +79,17 @@ export class AtlasPowerComponent implements OnInit {
       .attr("d", d => area(d.values))
       .style("opacity", 0.6)
       .style("fill", d => zScaleEfoys(d.name));
+
+    var efoyFuel = g.selectAll(".efoy-fuel")
+      .data(efoys)
+      .enter().append("g")
+      .attr("class", "efoy-fuel");
+
+    efoyFuel.append("path")
+      .attr("class", "line")
+      .attr("d", d => efoyLine(d.values))
+      .style("stroke-dasharray", ("3, 3"))
+      .style("stroke", d => zScaleEfoys(d.name));
 
     var battery = g.selectAll(".battery")
       .data(batteries)
@@ -94,7 +108,7 @@ export class AtlasPowerComponent implements OnInit {
 
     g.append("g")
       .attr("class", "axis axis-y")
-      .call(d3.axisLeft(yScaleBattery));
+      .call(d3.axisLeft(yScale));
   }
 
   private datifyPowerRecord(state_of_charge: number[]): PowerRecord[] {
@@ -104,9 +118,9 @@ export class AtlasPowerComponent implements OnInit {
     });
   }
 
-  private datifyEfoyRecord(current: number[]): EfoyRecord[] {
+  private datifyEfoyRecord(fuel: number[], current: number[]): EfoyRecord[] {
     return this.history.datetime.map((datetime, i) => {
-      var efoyRecord = { datetime: datetime, current: current[i] };
+      var efoyRecord = { datetime: datetime, fuel: fuel[i], current: current[i] };
       return efoyRecord;
     });
   }
@@ -119,5 +133,6 @@ interface PowerRecord {
 
 interface EfoyRecord {
   datetime: Date;
+  fuel: number;
   current: number;
 }
