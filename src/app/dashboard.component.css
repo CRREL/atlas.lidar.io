@@ -1,0 +1,4 @@
+.jumbotron {
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,1)), url("/assets/helheim.jpg");
+    background-size: cover;
+}
