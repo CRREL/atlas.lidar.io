@@ -52,6 +52,33 @@
             </div>
             <div class="col-md" *ngFor="let efoy of atlasStatus.efoys">
                 <p>Efoy {{efoy.id}} is in {{efoy.state}} mode. It has used {{efoy.consumed}} liters of cartridge {{efoy.cartridge}}.</p>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="progress">
+                            <div class="progress-bar {{efoy.fuel_1_1 * 100 | stateOfChargeBg}}"
+                                 [ngStyle]="{'width.%': efoy.fuel_1_1 * 100}"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="progress">
+                            <div class="progress-bar {{efoy.fuel_1_2 * 100 | stateOfChargeBg}}"
+                                 [ngStyle]="{'width.%': efoy.fuel_1_2 * 100}"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="progress">
+                            <div class="progress-bar {{efoy.fuel_2_1 * 100 | stateOfChargeBg}}"
+                                 [ngStyle]="{'width.%': efoy.fuel_2_1 * 100}"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="progress">
+                            <div class="progress-bar {{efoy.fuel_2_2 * 100 | stateOfChargeBg}}"
+                                 [ngStyle]="{'width.%': efoy.fuel_2_2 * 100}"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
