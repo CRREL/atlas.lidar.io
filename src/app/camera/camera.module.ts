@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CameraLatestImageComponent } from './camera-latest-image.component';
+import { CameraFigureComponent } from './camera-figure.component';
 import { CameraService } from './camera.service';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  exports: [CameraLatestImageComponent],
-  declarations: [CameraLatestImageComponent],
+  exports: [CameraFigureComponent],
+  declarations: [CameraFigureComponent],
   providers: [CameraService],
 })
 export class CameraModule { }

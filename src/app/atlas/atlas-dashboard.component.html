@@ -20,10 +20,19 @@
         </div>
     </div>
 
-    <div *ngIf="atlasStatus">
-        <h2>Power</h2>
+    <div *ngIf="atlasStatus && cameras">
+        <h2>Status</h2>
 
-        <p>This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}. All times on this page are in your browser's local time zone.</p>
+        <p>
+            This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}.
+            All times on this page are in your browser's local time zone.
+            Every hour, ATLAS sends a "heartbeat" message, via satellite connection, that contains information on current power levels, environmental conditions, and more.
+            The remote cameras use their own satellite connections to transmit images back to host servers.
+        </p>
+
+        <atlas-status [status]="atlasStatus" [cameras]="cameras"></atlas-status>
+
+        <h2>Power</h2>
 
         <p>
             ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
@@ -38,33 +47,10 @@
         <atlas-timeseries [timeseries]="atlasStatus.timeseries"></atlas-timeseries>
     </div>
 
-    <h2>Cameras</h2>
+    <div *ngIf="cameras">
+        <h2>Cameras</h2>
 
-    <div class="row">
-        <div class="col-md">
-            <camera-latest-image [name]="'ATLAS_CAM'"></camera-latest-image>
-        </div>
-        <div class="col-md">
-            <camera-latest-image [name]="'ATLAS_CAM2'"></camera-latest-image>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md">
-            <camera-latest-image [name]="'HEL_DUAL_2'"></camera-latest-image>
-        </div>
-        <div class="col-md">
-            <camera-latest-image [name]="'HEL_DUAL_1'"></camera-latest-image>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md">
-            <camera-latest-image [name]="'HEL_BERGCAM3_1'"></camera-latest-image>
-        </div>
-        <div class="col-md">
-            <camera-latest-image [name]="'HEL_BERGCAM3_2'"></camera-latest-image>
-        </div>
+        <atlas-cameras [cameras]="cameras"></atlas-cameras>
     </div>
 
     <h2>Videos</h2>
@@ -90,25 +76,25 @@
     </p>
 
     <div class="row justify-content-center">
-        <div class="col-3">
+        <div class="my-3 col-6 col-sm-3">
             <a href="http://www.erdc.usace.army.mil/Locations/CRREL.aspx">
                 <img class="img-fluid" src="/assets/rsgis.png">
             </a>
         </div>
     </div>
 
-    <div class="row my-3">
-        <div class="col-5">
+    <div class="row justify-content-center">
+        <div class="my-3 col-8 col-sm-4">
             <a href="http://www.heisingsimons.org/">
                 <img class="img-fluid" src="/assets/heising-simons.jpg">
             </a>
         </div>
-        <div class="col-2">
+        <div class="my-3 col-6 col-sm-2">
             <a href="http://stearns.dept.ku.edu">
                 <img class="img-fluid" src="/assets/ku.png">
             </a>
         </div>
-        <div class="col-4">
+        <div class="my-3 col-8 col-sm-4">
             <a href="http://climatechange.umaine.edu/glaciology/index.html">
                 <img class="img-fluid" src="/assets/umaine.png">
             </a>

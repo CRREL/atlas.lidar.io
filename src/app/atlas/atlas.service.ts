@@ -16,6 +16,7 @@ export class AtlasService {
       .toPromise()
       .then(response => {
         let status = response.json() as AtlasStatus;
+        status.last_heartbeat_received = new Date(status.last_heartbeat_received);
         status.timeseries.datetimes = status.timeseries.datetimes.map(s => new Date(s));
         return status;
       })

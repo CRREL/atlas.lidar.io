@@ -1,4 +1,4 @@
-<figure *ngIf="camera" class="figure">
+<figure class="figure" *ngIf="camera">
     <a href="{{camera.latest_image.url}}">
         <img src="{{camera.latest_image.url}}" class="img-fluid figure-img" alt="The latest image from {{camera.name}}.">
     </a>
