@@ -7,3 +7,8 @@
     fill: none;
     stroke-width: 1.5px;
 }
+
+.fuel-percentage .line {
+    stroke-dasharray: 3;
+    stroke-width: 1px;
+}

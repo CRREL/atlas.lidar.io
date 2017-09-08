@@ -1,0 +1,20 @@
+<div class="row my-5">
+    <div class="col-md-2">
+        <h3>EFOYs</h3>
+    </div>
+    <div class="col-md mb-3" *ngFor="let efoy of efoys">
+        <p>Efoy {{efoy.id}} is in {{efoy.state}} mode. It has used {{efoy.active_cartridge_consumed}} liters of cartridge {{efoy.active_cartridge}}.</p>
+
+        <div class="row">
+            <div class="col" *ngFor="let cartridge of efoy.cartridges">
+                <div class="progress">
+                    <div
+                     class="progress-bar {{cartridge.fuel_percentage | trafficLight}}"
+                     [ngStyle]="{'width.%': cartridge.fuel_percentage}">
+                        {{cartridge.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { CameraService } from "./camera.service";
-import { Camera } from "./camera";
+import { Component, OnInit, Input } from '@angular/core';
+import { CameraService } from './camera.service';
+import { Camera } from './camera';
 
 @Component({
-  selector: "camera-latest-image",
-  templateUrl: "./camera-latest-image.component.html",
+  selector: 'camera-latest-image',
+  templateUrl: './camera-latest-image.component.html',
 })
 export class CameraLatestImageComponent implements OnInit {
   @Input() name: string;

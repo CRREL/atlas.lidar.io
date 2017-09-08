@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  glacioApiServer: "http://glacio.gadom.ski"
+  glacioApiServer: "http://localhost:3000"
 };

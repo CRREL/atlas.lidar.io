@@ -26,65 +26,17 @@
         <p>This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}. All times on this page are in your browser's local time zone.</p>
 
         <p>
-        ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
-        During the summer months, the solar supply provides more than enough power for the system.
-        As the sun descends during the shoulder seasons, the EFOY fuel cells take over and provide power into the winter.
+            ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
+            During the summer months, the solar supply provides more than enough power for the system.
+            As the sun descends during the shoulder seasons, the EFOY fuel cells take over and provide power into the winter.
         </p>
 
-        <div class="row my-3">
-            <div class="col-md-2">
-                <h3>Batteries</h3>
-            </div>
-            <div class="col-md mb-3" *ngFor="let battery of atlasStatus.batteries">
-                <p>Battery {{battery.id}} state of charge is {{battery.state_of_charge / 100 | percent:'1.1-1'}}.</p>
+        <atlas-batteries [batteries]="atlasStatus.batteries"></atlas-batteries>
 
-                <div class="progress">
-                    <div
-                        class="progress-bar {{battery.state_of_charge | stateOfChargeBg}}"
-                        [ngStyle]="{'width.%': battery.state_of_charge}"></div>
-                </div>
-            </div>
-        </div>
+        <atlas-efoys [efoys]="atlasStatus.efoys"></atlas-efoys>
 
-        <div class="row my-3">
-            <div class="col-md-2">
-                <h3>EFOYs</h3>
-            </div>
-            <div class="col-md" *ngFor="let efoy of atlasStatus.efoys">
-                <p>Efoy {{efoy.id}} is in {{efoy.state}} mode. It has used {{efoy.consumed}} liters of cartridge {{efoy.cartridge}}.</p>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="progress">
-                            <div class="progress-bar {{efoy.fuel_1_1 * 100 | stateOfChargeBg}}"
-                                 [ngStyle]="{'width.%': efoy.fuel_1_1 * 100}"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="progress">
-                            <div class="progress-bar {{efoy.fuel_1_2 * 100 | stateOfChargeBg}}"
-                                 [ngStyle]="{'width.%': efoy.fuel_1_2 * 100}"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="progress">
-                            <div class="progress-bar {{efoy.fuel_2_1 * 100 | stateOfChargeBg}}"
-                                 [ngStyle]="{'width.%': efoy.fuel_2_1 * 100}"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="progress">
-                            <div class="progress-bar {{efoy.fuel_2_2 * 100 | stateOfChargeBg}}"
-                                 [ngStyle]="{'width.%': efoy.fuel_2_2 * 100}"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <atlas-power></atlas-power>
+        <atlas-timeseries [timeseries]="atlasStatus.timeseries"></atlas-timeseries>
     </div>
-
 
     <h2>Cameras</h2>
 
