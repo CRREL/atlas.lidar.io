@@ -4,21 +4,19 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HelBergcamComponent } from './hel-bergcam.component';
 
 import { AtlasModule } from './atlas/atlas.module';
 import { CameraModule } from './camera/camera.module';
+import { HelBergcamModule } from './hel-bergcam/hel-bergcam.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HelBergcamComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     AppRoutingModule,
     AtlasModule,
-    CameraModule,
     BrowserModule,
+    CameraModule,
+    HelBergcamModule,
     HttpModule,
   ],
   providers: [HttpModule],
