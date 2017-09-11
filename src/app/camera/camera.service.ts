@@ -44,7 +44,7 @@ export class CameraService {
 }
 
 function jsonToCameraDetail(json): Camera {
-  let camera = json as Camera;
+  const camera = json as Camera;
   camera.latest_image.datetime = new Date(camera.latest_image.datetime);
   return camera;
 }

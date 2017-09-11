@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: "trafficLight" })
+@Pipe({ name: 'trafficLight' })
 export class TrafficLightPipe implements PipeTransform {
   transform(n: number): string {
     if (n > 70) {

@@ -30,7 +30,7 @@
             The remote cameras use their own satellite connections to transmit images back to host servers.
         </p>
 
-        <atlas-status [status]="atlasStatus" [cameras]="cameras"></atlas-status>
+        <app-atlas-status [status]="atlasStatus" [cameras]="cameras"></app-atlas-status>
 
         <h2>Power</h2>
 
@@ -40,17 +40,17 @@
             As the sun descends during the shoulder seasons, the EFOY fuel cells take over and provide power into the winter.
         </p>
 
-        <atlas-batteries [batteries]="atlasStatus.batteries"></atlas-batteries>
+        <app-atlas-batteries [batteries]="atlasStatus.batteries"></app-atlas-batteries>
 
-        <atlas-efoys [efoys]="atlasStatus.efoys"></atlas-efoys>
+        <app-atlas-efoys [efoys]="atlasStatus.efoys"></app-atlas-efoys>
 
-        <atlas-timeseries [timeseries]="atlasStatus.timeseries"></atlas-timeseries>
+        <app-atlas-timeseries [timeseries]="atlasStatus.timeseries"></app-atlas-timeseries>
     </div>
 
     <div *ngIf="cameras">
         <h2>Cameras</h2>
 
-        <atlas-cameras [cameras]="cameras"></atlas-cameras>
+        <app-atlas-cameras [cameras]="cameras"></app-atlas-cameras>
     </div>
 
     <h2>Videos</h2>

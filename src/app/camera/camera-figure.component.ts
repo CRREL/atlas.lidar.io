@@ -3,7 +3,7 @@ import { CameraService } from './camera.service';
 import { Camera } from './camera';
 
 @Component({
-  selector: 'camera-figure',
+  selector: 'app-camera-figure',
   templateUrl: './camera-figure.component.html',
 })
 export class CameraFigureComponent implements OnInit {

@@ -4,7 +4,7 @@ import { AtlasEfoyStatus } from './atlas-efoy-status';
 import { Camera } from '../camera/camera';
 
 @Component({
-  selector: 'atlas-status',
+  selector: 'app-atlas-status',
   templateUrl: './atlas-status.component.html',
 })
 export class AtlasStatusComponent {
@@ -58,18 +58,18 @@ export class AtlasStatusComponent {
   getEfoyStatusItem(efoy: AtlasEfoyStatus): StatusItem {
     const value = efoy.state;
     let style;
-    if (value == 'auto on') {
+    if (value === 'auto on') {
       style = 'info';
-    } else if (value == 'auto off') {
+    } else if (value === 'auto off') {
       style = 'success';
-    } else if (value == 'freeze protection') {
+    } else if (value === 'freeze protection') {
       style = 'warning';
     }
     return {
       key: 'EFOY ' + efoy.id,
       value: value,
       style: style,
-    }
+    };
   }
 
   getCameraStatusItem(camera: Camera): StatusItem {

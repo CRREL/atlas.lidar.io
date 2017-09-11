@@ -7,7 +7,7 @@ import { AtlasStatus } from './atlas-status';
 
 @Injectable()
 export class AtlasService {
-  private atlasStatusUrl = environment.glacioApiServer + "/atlas/status";
+  private atlasStatusUrl = environment.glacioApiServer + '/atlas/status';
 
   constructor(private http: Http) { }
 
@@ -15,7 +15,7 @@ export class AtlasService {
     return this.http.get(this.atlasStatusUrl)
       .toPromise()
       .then(response => {
-        let status = response.json() as AtlasStatus;
+        const status = response.json() as AtlasStatus;
         status.last_heartbeat_received = new Date(status.last_heartbeat_received);
         status.timeseries.datetimes = status.timeseries.datetimes.map(s => new Date(s));
         return status;
@@ -24,7 +24,7 @@ export class AtlasService {
   }
 
   private handleError(error: any): Promise<any> {
-    console.error("An error occured", error);
+    console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
 }

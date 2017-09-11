@@ -6,7 +6,7 @@ import * as d3_scale_chromatic from 'd3-scale-chromatic';
 import { AtlasTimeseries } from './atlas-timeseries';
 
 @Component({
-  selector: 'atlas-timeseries',
+  selector: 'app-atlas-timeseries',
   templateUrl: './atlas-timeseries.component.html',
   styleUrls: ['./atlas-timeseries.component.css'],
   encapsulation: ViewEncapsulation.None,
@@ -50,7 +50,7 @@ export class AtlasTimeseriesComponent implements OnInit {
 
     const svg = d3.select(element).append('svg')
       .attr('width', element.offsetWidth)
-      .attr('height', element.offsetHeight)
+      .attr('height', element.offsetHeight);
 
     const g = svg.append('g').attr('transform', `translate(${this.margin.left},${this.margin.top})`);
     const xScale = d3.scaleTime().domain(d3.extent(this.timeseries.datetimes)).range([0, width]);
