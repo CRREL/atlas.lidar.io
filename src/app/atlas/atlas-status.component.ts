@@ -74,12 +74,11 @@ export class AtlasStatusComponent {
 
   getCameraStatusItem(camera: Camera): StatusItem {
     const delta = (new Date()).getTime() - camera.latest_image.datetime.getTime();
-    const interval = hoursToMilliseconds(camera.interval);
     let value, style;
-    if (delta < interval * 1.5) {
+    if (delta < hoursToMilliseconds(24)) {
       value = 'on time';
       style = 'success';
-    } else if (delta < interval * 4) {
+    } else if (delta < hoursToMilliseconds(48)) {
       value = 'late';
       style = 'warning';
     } else {
