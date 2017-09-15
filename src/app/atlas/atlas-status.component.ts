@@ -37,7 +37,7 @@ export class AtlasStatusComponent {
       style = 'warning';
     } else {
       value = 'stopped';
-      value = 'danger';
+      style = 'danger';
     }
 
     return {
