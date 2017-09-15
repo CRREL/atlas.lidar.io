@@ -15,6 +15,7 @@ export class AtlasStatusComponent {
     return [
       this.getHeartbeatItem(),
       this.getRieglSwitchItem(),
+      this.getScannerItem(),
     ];
   }
 
@@ -52,6 +53,31 @@ export class AtlasStatusComponent {
       key: 'Scanner and housing power',
       value: this.status.are_riegl_systems_on ? 'on' : 'off',
       style: this.status.are_riegl_systems_on ? 'success' : 'warning'
+    };
+  }
+
+  getScannerItem(): StatusItem {
+    const delta = (new Date()).getTime() - this.status.last_scan.start.getTime();
+    let value, style;
+    if (delta < hoursToMilliseconds(8)) {
+      if (this.status.last_scan.end) {
+        value = 'on time';
+        style = 'success';
+      } else {
+        value = 'aborted';
+        style = 'dark';
+      }
+    } else if (delta < hoursToMilliseconds(24)) {
+      value = 'late';
+      style = 'warning';
+    } else {
+      value = 'stopped';
+      style = 'danger';
+    }
+    return {
+      key: 'Last scan',
+      value: value,
+      style: style,
     };
   }
 

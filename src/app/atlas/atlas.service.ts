@@ -17,6 +17,8 @@ export class AtlasService {
       .then(response => {
         const status = response.json() as AtlasStatus;
         status.last_heartbeat_received = new Date(status.last_heartbeat_received);
+        status.last_scan.start = new Date(status.last_scan.start);
+        status.last_scan.end = new Date(status.last_scan.end);
         status.timeseries.datetimes = status.timeseries.datetimes.map(s => new Date(s));
         return status;
       })
