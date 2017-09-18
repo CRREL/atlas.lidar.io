@@ -4,4 +4,5 @@ export interface AtlasTimeseries {
   efoy_current: { id: number[] }[];
   efoy_voltage: { id: number[] }[];
   efoy_fuel_percentage: { id: number[] }[];
+  efoy_state: { id: string[] }[];
 }

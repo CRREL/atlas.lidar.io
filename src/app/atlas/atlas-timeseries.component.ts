@@ -43,6 +43,18 @@ export class AtlasTimeseriesComponent implements OnInit {
         })
       };
     });
+    const efoyState = Object.keys(this.timeseries.efoy_state).map(id => {
+      return {
+        name: 'EFOY ' + id,
+        values: this.timeseries.efoy_state[id].map((d, i) => {
+          return {
+            datetime: this.timeseries.datetimes[i],
+            value: d,
+            id: +id,
+          };
+        })
+      };
+    });
 
     const element = this.chartContainer.nativeElement;
     const width = element.offsetWidth - this.margin.left - this.margin.right;
@@ -62,6 +74,22 @@ export class AtlasTimeseriesComponent implements OnInit {
       .curve(d3.curveBasis)
       .x(d => xScale(d.datetime))
       .y(d => yScale(d.value));
+    const area = d3.area<any>()
+      .defined(d => d.value == 'auto on')
+      .x(d => xScale(d.datetime))
+      .y0(d => yScale((d.id - 1) * 5))
+      .y1(d => yScale(d.id * 5));
+
+    g.selectAll('.efoy-state')
+      .data(efoyState)
+      .enter()
+      .append('g')
+      .attr('class', 'efoy-state')
+      .append('path')
+      .attr('class', 'area')
+      .attr('d', d => area(d.values))
+      .style('fill', d => efoyColourScale(d.name))
+      .style('opacity', 0.5);
 
     g.selectAll('.fuel-percentage')
       .data(fuelPercentage)
