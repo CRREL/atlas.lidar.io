@@ -9,5 +9,5 @@ export interface AtlasStatus {
   batteries: AtlasBatteryStatus[];
   efoys: AtlasEfoyStatus[];
   timeseries: AtlasTimeseries;
-  are_riegl_systems_on: boolean;
+  is_riegl_switch_on: boolean;
 }

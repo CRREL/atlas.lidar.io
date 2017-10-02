@@ -51,8 +51,8 @@ export class AtlasStatusComponent {
   getRieglSwitchItem(): StatusItem {
     return {
       key: 'Scanner and housing power',
-      value: this.status.are_riegl_systems_on ? 'on' : 'off',
-      style: this.status.are_riegl_systems_on ? 'success' : 'warning'
+      value: this.status.is_riegl_switch_on ? 'on' : 'off',
+      style: this.status.is_riegl_switch_on ? 'success' : 'warning'
     };
   }
 
