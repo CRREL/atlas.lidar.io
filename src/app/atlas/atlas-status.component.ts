@@ -59,7 +59,7 @@ export class AtlasStatusComponent {
   getScannerItem(): StatusItem {
     const delta = (new Date()).getTime() - this.status.last_scan.start.getTime();
     let value, style;
-    if (delta < hoursToMilliseconds(8)) {
+    if (delta < hoursToMilliseconds(26)) {
       if (this.status.last_scan.end) {
         value = 'on time';
         style = 'success';
@@ -67,7 +67,7 @@ export class AtlasStatusComponent {
         value = 'aborted';
         style = 'dark';
       }
-    } else if (delta < hoursToMilliseconds(24)) {
+    } else if (delta < hoursToMilliseconds(48)) {
       value = 'late';
       style = 'warning';
     } else {
