@@ -14,7 +14,9 @@ import { AtlasTimeseries } from './atlas-timeseries';
 export class AtlasTimeseriesComponent implements OnInit {
   @ViewChild('atlasTimeseriesChart') private chartContainer: ElementRef;
   @Input() timeseries: AtlasTimeseries;
-  private margin: any = { top: 20, bottom: 40, left: 30, right: 20 };
+  private margin: any = { top: 20, bottom: 40, left: 70, right: 40 };
+  private mainChartPercentage = 0.6;
+  private padding = 40;
 
   ngOnInit(): void {
     this.createChart();
@@ -43,9 +45,15 @@ export class AtlasTimeseriesComponent implements OnInit {
         })
       };
     });
+    const rieglSwitch = this.timeseries.is_riegl_switch_on.map((d, i) => {
+      return {
+        datetime: this.timeseries.datetimes[i],
+        value: d,
+      };
+    })
     const efoyState = Object.keys(this.timeseries.efoy_state).map(id => {
       return {
-        name: 'EFOY ' + id,
+        name: efoyName(id),
         values: this.timeseries.efoy_state[id].map((d, i) => {
           return {
             datetime: this.timeseries.datetimes[i],
@@ -66,7 +74,10 @@ export class AtlasTimeseriesComponent implements OnInit {
 
     const g = svg.append('g').attr('transform', `translate(${this.margin.left},${this.margin.top})`);
     const xScale = d3.scaleTime().domain(d3.extent(this.timeseries.datetimes)).range([0, width]);
-    const yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+    const yScale = d3.scaleLinear().domain([0, 100]).range([height * this.mainChartPercentage, 0]);
+    const yScale2 = d3.scaleBand().domain([efoyName(2), efoyName(1), 'Riegl switch'])
+      .range([height, height * this.mainChartPercentage + this.padding])
+      .padding(0.2);
     const batteryColourScale = d3.scaleOrdinal(d3_scale_chromatic.schemePaired).domain(stateOfCharge.map(d => d.name));
     const efoyColourScale = d3.scaleOrdinal(d3_scale_chromatic.schemePastel1).domain(fuelPercentage.map(d => d.name));
 
@@ -74,11 +85,25 @@ export class AtlasTimeseriesComponent implements OnInit {
       .curve(d3.curveBasis)
       .x(d => xScale(d.datetime))
       .y(d => yScale(d.value));
-    const area = d3.area<any>()
+    const switchArea = d3.area<any>()
+      .defined(d => d.value)
+      .x(d => xScale(d.datetime))
+      .y0(d => yScale2('Riegl switch'))
+      .y1(d => yScale2('Riegl switch') + yScale2.bandwidth());
+    const efoyArea = d3.area<any>()
       .defined(d => d.value == 'auto on')
       .x(d => xScale(d.datetime))
-      .y0(d => yScale((d.id - 1) * 5))
-      .y1(d => yScale(d.id * 5));
+      .y0(d => yScale2(efoyName(d.id)))
+      .y1(d => yScale2(efoyName(d.id)) + yScale2.bandwidth());
+
+    g.append('g')
+      .datum(rieglSwitch)
+      .attr('class', 'riegl-switch')
+      .append('path')
+      .attr('class', 'area')
+      .attr('d', switchArea)
+      .style('fill', d => 'green')
+      .style('opacity', 0.2);
 
     g.selectAll('.efoy-state')
       .data(efoyState)
@@ -87,7 +112,7 @@ export class AtlasTimeseriesComponent implements OnInit {
       .attr('class', 'efoy-state')
       .append('path')
       .attr('class', 'area')
-      .attr('d', d => area(d.values))
+      .attr('d', d => efoyArea(d.values))
       .style('fill', d => efoyColourScale(d.name))
       .style('opacity', 0.5);
 
@@ -112,10 +137,20 @@ export class AtlasTimeseriesComponent implements OnInit {
       .style('stroke', d => batteryColourScale(d.name));
 
     g.append('g')
-      .attr('transform', `translate(0,${height})`)
+      .attr('transform', `translate(0,${height * this.mainChartPercentage})`)
       .call(d3.axisBottom(xScale));
 
     g.append('g')
       .call(d3.axisLeft(yScale));
+
+    g.append('g')
+      .call(d3.axisLeft(yScale2));
+    g.append('g')
+      .attr('transform', `translate(0,${height})`)
+      .call(d3.axisBottom(xScale).ticks(0));
   }
+}
+
+function efoyName(id: any): string {
+  return "EFOY " + id;
 }
