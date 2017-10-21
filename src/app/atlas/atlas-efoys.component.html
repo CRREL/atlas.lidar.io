@@ -15,7 +15,7 @@
             <div class="col" *ngFor="let cartridge of efoy.cartridges">
                 <div class="progress">
                     <div
-                     class="progress-bar {{cartridge.fuel_percentage | trafficLight}}"
+                     class="progress-bar"
                      [ngStyle]="{'width.%': cartridge.fuel_percentage}">
                         {{cartridge.name}}
                     </div>
