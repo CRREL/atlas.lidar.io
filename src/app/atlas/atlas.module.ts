@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 
 import { SharedModule } from '../shared/shared.module';
 import { CameraModule } from '../camera/camera.module';
@@ -15,6 +16,7 @@ import { AtlasTimeseriesComponent } from './atlas-timeseries.component';
 
 @NgModule({
   imports: [
+    AngularFontAwesomeModule,
     AtlasRoutingModule,
     CameraModule,
     CommonModule,

@@ -1,104 +1,101 @@
 <div class="jumbotron rounded-0">
-    <div class="container">
-        <h1 class="display-3">ATLAS</h1>
-        <p>A remote LiDAR system capturing 3D time-lapse data of the Helheim Glacier in southeast Greenland.</p>
-    </div>
+  <div class="container">
+    <h1 class="display-3">ATLAS</h1>
+    <p>A remote LiDAR system capturing 3D time-lapse data of the Helheim Glacier in southeast Greenland.</p>
+  </div>
 </div>
 <div class="container">
+  <div *ngIf="atlasStatus && cameras; else elseBlock">
     <div class="row mb-3 justify-content-center align-items-center d-none d-md-flex">
-        <div class="col-1">
-            <img class="img-fluid" src="/assets/rsgis.png">
-        </div>
-        <div class="col-3">
-            <img class="img-fluid" src="/assets/heising-simons.jpg">
-        </div>
-        <div class="col-1">
-            <img class="img-fluid" src="/assets/ku.png">
-        </div>
-        <div class="col-2">
-            <img class="img-fluid" src="/assets/umaine.png">
-        </div>
+      <div class="col-1">
+        <img class="img-fluid" src="/assets/rsgis.png">
+      </div>
+      <div class="col-3">
+        <img class="img-fluid" src="/assets/heising-simons.jpg">
+      </div>
+      <div class="col-1">
+        <img class="img-fluid" src="/assets/ku.png">
+      </div>
+      <div class="col-2">
+        <img class="img-fluid" src="/assets/umaine.png">
+      </div>
     </div>
 
-    <div *ngIf="atlasStatus && cameras">
-        <h2>Status</h2>
+    <h2>Status</h2>
 
-        <p>
-            This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}.
-            All times on this page are in your browser's local time zone.
-            Every hour, ATLAS sends a "heartbeat" message, via satellite connection, that contains information on current power levels, environmental conditions, and more.
-            The remote cameras use their own satellite connections to transmit images back to host servers.
-        </p>
+    <p>
+    This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}.
+    All times on this page are in your browser's local time zone.
+    Every hour, ATLAS sends a "heartbeat" message, via satellite connection, that contains information on current power levels, environmental conditions, and more.
+    The remote cameras use their own satellite connections to transmit images back to host servers.
+    </p>
 
-        <app-atlas-status [status]="atlasStatus" [cameras]="cameras"></app-atlas-status>
+    <app-atlas-status [status]="atlasStatus" [cameras]="cameras"></app-atlas-status>
 
-        <h2>Power</h2>
+    <h2>Power</h2>
 
-        <p>
-            ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
-            During the summer months, the solar supply provides more than enough power for the system.
-            As the sun descends during the shoulder seasons, the EFOY fuel cells take over and provide power into the winter.
-        </p>
+    <p>
+    ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
+    During the summer months, the solar supply provides more than enough power for the system.
+    As the sun descends during the shoulder seasons, the EFOY fuel cells take over and provide power into the winter.
+    </p>
 
-        <app-atlas-batteries [batteries]="atlasStatus.batteries"></app-atlas-batteries>
+    <app-atlas-batteries [batteries]="atlasStatus.batteries"></app-atlas-batteries>
 
-        <app-atlas-efoys [efoys]="atlasStatus.efoys"></app-atlas-efoys>
+    <app-atlas-efoys [efoys]="atlasStatus.efoys"></app-atlas-efoys>
 
-        <app-atlas-timeseries [timeseries]="atlasStatus.timeseries"></app-atlas-timeseries>
-    </div>
+    <app-atlas-timeseries [timeseries]="atlasStatus.timeseries"></app-atlas-timeseries>
 
-    <div *ngIf="cameras">
-        <h2>Cameras</h2>
+    <h2>Cameras</h2>
 
-        <app-atlas-cameras [cameras]="cameras"></app-atlas-cameras>
-    </div>
+    <app-atlas-cameras [cameras]="cameras"></app-atlas-cameras>
 
     <h2>Videos</h2>
 
     <p>Scale is always an issue when working at Helheim Glacier. Fly away from the installed ATLAS System to see how truly small it is in comparison to the expansive terrain surrounding Helheim.</p>
 
     <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/180222620" width="1920" height="1080" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/180222620" width="1920" height="1080" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </div>
 
     <h2 class="mt-5">Other projects</h2>
 
     <p>
-        We also maintain two dual cameras further down the Sermilik Fjord to track iceberg motion.
-        View these cameras <a href="/hel-bergcam">here</a>.
+    We also maintain two dual cameras further down the Sermilik Fjord to track iceberg motion.
+    View these cameras <a href="/hel-bergcam">here</a>.
     </p>
 
     <h2 class="mt-5">Support</h2>
 
     <p>
-        ATLAS was built and is maintained by a team at the RS/GIS Center of Expertise, located at CRREL in Hanover, NH, along with our scientific partners at the University of Maine and the University of Kansas.
-        Financial support is provided by the Heising-Simons Foundation.
+    ATLAS was built and is maintained by a team at the RS/GIS Center of Expertise, located at CRREL in Hanover, NH, along with our scientific partners at the University of Maine and the University of Kansas.
+    Financial support is provided by the Heising-Simons Foundation.
     </p>
 
     <div class="row justify-content-center">
-        <div class="my-3 col-6 col-sm-3">
-            <a href="http://www.erdc.usace.army.mil/Locations/CRREL.aspx">
-                <img class="img-fluid" src="/assets/rsgis.png">
-            </a>
-        </div>
+      <div class="my-3 col-6 col-sm-3">
+        <a href="http://www.erdc.usace.army.mil/Locations/CRREL.aspx">
+          <img class="img-fluid" src="/assets/rsgis.png">
+        </a>
+      </div>
     </div>
 
     <div class="row justify-content-center">
-        <div class="my-3 col-8 col-sm-4">
-            <a href="http://www.heisingsimons.org/">
-                <img class="img-fluid" src="/assets/heising-simons.jpg">
-            </a>
-        </div>
-        <div class="my-3 col-6 col-sm-2">
-            <a href="http://stearns.dept.ku.edu">
-                <img class="img-fluid" src="/assets/ku.png">
-            </a>
-        </div>
-        <div class="my-3 col-8 col-sm-4">
-            <a href="http://climatechange.umaine.edu/glaciology/index.html">
-                <img class="img-fluid" src="/assets/umaine.png">
-            </a>
-        </div>
+      <div class="my-3 col-8 col-sm-4">
+        <a href="http://www.heisingsimons.org/">
+          <img class="img-fluid" src="/assets/heising-simons.jpg">
+        </a>
+      </div>
+      <div class="my-3 col-6 col-sm-2">
+        <a href="http://stearns.dept.ku.edu">
+          <img class="img-fluid" src="/assets/ku.png">
+        </a>
+      </div>
+      <div class="my-3 col-8 col-sm-4">
+        <a href="http://climatechange.umaine.edu/glaciology/index.html">
+          <img class="img-fluid" src="/assets/umaine.png">
+        </a>
+      </div>
     </div>
 
     <h2 class="mt-5">More information</h2>
@@ -107,4 +104,11 @@
     This website is created with <a href="https://angular.io/">Angular</a> and is based on an HTTP API written in <a href="https://www.rust-lang.org/en-US/">Rust</a>.
     For more information, or to request source data, please email Pete Gadomski at peter dot j dot gadomski at erdc dot dren dot mil.
     </p>
+  </div>
 </div>
+<ng-template #elseBlock>
+  <div class="mt-5 text-center">
+    <fa size="3x" name="cog" animation="spin"></fa>
+    <p>Loading ATLAS status information...</p>
+  </div>
+</ng-template>
