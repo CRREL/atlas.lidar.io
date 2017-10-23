@@ -50,7 +50,7 @@ export class AtlasTimeseriesComponent implements OnInit {
         datetime: this.timeseries.datetimes[i],
         value: d,
       };
-    })
+    });
     const efoyState = Object.keys(this.timeseries.efoy_state).map(id => {
       return {
         name: efoyName(id),
@@ -91,7 +91,7 @@ export class AtlasTimeseriesComponent implements OnInit {
       .y0(d => yScale2('Riegl switch'))
       .y1(d => yScale2('Riegl switch') + yScale2.bandwidth());
     const efoyArea = d3.area<any>()
-      .defined(d => d.value == 'auto on')
+      .defined(d => d.value === 'auto on')
       .x(d => xScale(d.datetime))
       .y0(d => yScale2(efoyName(d.id)))
       .y1(d => yScale2(efoyName(d.id)) + yScale2.bandwidth());
@@ -152,5 +152,5 @@ export class AtlasTimeseriesComponent implements OnInit {
 }
 
 function efoyName(id: any): string {
-  return "EFOY " + id;
+  return 'EFOY ' + id;
 }
