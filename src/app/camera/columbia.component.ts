@@ -8,7 +8,7 @@ import { Image } from './camera';
   templateUrl: './columbia.component.html',
 })
 export class ColumbiaComponent {
-  private images: Image[];
+  images: Image[];
   private CAMERA_NAME = 'COLUMBIA';
 
   constructor(private cameraService: CameraService) { }
