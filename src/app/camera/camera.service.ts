@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Camera } from './camera';
+import { Camera, Image } from './camera';
 import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 
@@ -31,6 +31,13 @@ export class CameraService {
         .toPromise()
         .then(response => jsonToCameraDetail(response.json()))
         .catch(this.handleError)));
+  }
+
+  getImages(name: string): Promise<Image[]> {
+    return this.http.get(this.camerasUrl + '/' + name + '/images')
+      .toPromise()
+      .then(response => response.json)
+      .catch(this.handleError);
   }
 
   private getCameraUrl(name: string): string {
