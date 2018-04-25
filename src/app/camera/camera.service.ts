@@ -36,7 +36,7 @@ export class CameraService {
   getImages(name: string): Promise<Image[]> {
     return this.http.get(this.camerasUrl + '/' + name + '/images')
       .toPromise()
-      .then(response => response.json)
+      .then(response => response.json() as Image[])
       .catch(this.handleError);
   }
 

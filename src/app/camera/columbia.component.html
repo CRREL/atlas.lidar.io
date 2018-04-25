@@ -10,7 +10,20 @@
       <app-camera-figure [name]="'COLUMBIA'"></app-camera-figure>
     </div>
     <div class="col-6">
+      <p>The last few images from the Columbia Glacier.</p>
 
+      <div class="row">
+        <div class="col-6" *ngFor="let image of images">
+          <div class="card my-3">
+            <a href="{{ image.url }}">
+              <img src="{{ image.url }}" class="card-img-top">
+            </a>
+            <div class="card-body">
+              <p class="card-text">{{ image.datetime | date:"medium" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
