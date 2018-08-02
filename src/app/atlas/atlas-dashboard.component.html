@@ -21,30 +21,16 @@
       </div>
     </div>
 
+    <h2>Notice</h2>
+
+    <p>
+        This site is being updated after the 2018 field campaign.
+        Check back later for updated information from both ATLAS South and ATLAS North.
+    </p>
+
     <h2>Status</h2>
 
-    <p>
-    This information is current as of {{atlasStatus.last_heartbeat_received | date:"medium" }}.
-    All times on this page are in your browser's local time zone.
-    Every hour, ATLAS sends a "heartbeat" message, via satellite connection, that contains information on current power levels, environmental conditions, and more.
-    The remote cameras use their own satellite connections to transmit images back to host servers.
-    </p>
-
     <app-atlas-status [status]="atlasStatus" [cameras]="cameras"></app-atlas-status>
-
-    <h2>Power</h2>
-
-    <p>
-    ATLAS's power system consists of six large solar panels, providing about 2kWp, and two EFOY fuel cell generators, providing about 160W.
-    During the summer months, the solar supply provides more than enough power for the system.
-    As the sun descends during the shoulder seasons, the EFOY fuel cells take over and provide power into the winter.
-    </p>
-
-    <app-atlas-batteries [batteries]="atlasStatus.batteries"></app-atlas-batteries>
-
-    <app-atlas-efoys [efoys]="atlasStatus.efoys"></app-atlas-efoys>
-
-    <app-atlas-timeseries [timeseries]="atlasStatus.timeseries"></app-atlas-timeseries>
 
     <h2>Cameras</h2>
 

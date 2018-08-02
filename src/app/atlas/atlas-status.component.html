@@ -2,22 +2,6 @@
     <div class="col-lg-4 col-sm-8 mb-3">
         <ul class="list-group">
             <li
-                *ngFor="let item of getSystemStatusItems()"
-                class="list-group-item list-group-item-{{item.style}} justify-content-between d-flex">
-                <span>{{item.key}}</span>
-                <strong>{{item.value}}</strong>
-            </li>
-            <li
-                *ngFor="let item of getPowerStatusItems()"
-                class="list-group-item list-group-item-{{item.style}} justify-content-between d-flex">
-                <span>{{item.key}}</span>
-                <strong>{{item.value}}</strong>
-            </li>
-        </ul>
-    </div>
-    <div class="col-lg-4 col-sm-8 mb-3">
-        <ul class="list-group">
-            <li
                 *ngFor="let item of getCameraStatusItems()"
                 class="list-group-item list-group-item-{{item.style}} justify-content-between d-flex">
                 <span>{{item.key}}</span>
