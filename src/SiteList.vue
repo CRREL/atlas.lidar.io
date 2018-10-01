@@ -1,5 +1,5 @@
 <template>
-  <div id="site-list" class="mb-4">
+  <div id="site-list">
     <b-card-group deck>
       <site-card id="south"></site-card>
       <site-card id="north"></site-card>

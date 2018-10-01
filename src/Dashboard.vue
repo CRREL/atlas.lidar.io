@@ -6,11 +6,11 @@
       Remote glacier monitoring.
     </p>
 
-    <h2>Sites</h2>
+    <h2 class="display-5 mt-5">Sites</h2>
 
     <site-list></site-list>
 
-    <h2>Cameras</h2>
+    <h2 class="display-5 mt-5">Cameras</h2>
 
     <camera-list></camera-list>
   </div>
