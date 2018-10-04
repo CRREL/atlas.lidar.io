@@ -1,5 +1,5 @@
 <template>
-  <div class="camera">
+  <div class="camera" v-if="camera">
     <h1 class="display-4">{{ camera.name }}</h1>
 
     <p class="lead">
@@ -15,6 +15,10 @@
         <b-img :src="camera.latest_image.url" fluid />
       </b-col>
     </b-row>
+  </div>
+
+  <div class="camera" v-else>
+    Loading {{ camera.id }}...
   </div>
 </template>
 
