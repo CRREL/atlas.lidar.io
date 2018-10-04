@@ -25,7 +25,7 @@ const routes = [
   { path: '/', redirect: { name: 'dashboard' } },
   { path: '/dashboard', component: Dashboard, name: 'dashboard' },
   { path: '/cameras/:id', component: Camera, name: 'camera', props: true },
-  { path: '/sites/:id', component: Site, name: 'site', props: true }
+  { path: '/atlas/:id', component: Site, name: 'site', props: true }
 ]
 
 const router = new VueRouter({
