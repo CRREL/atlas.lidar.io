@@ -13,6 +13,9 @@ import Navbar from './Navbar.vue'
 export default {
   components: {
     Navbar
+  },
+  mounted () {
+    this.$store.dispatch('fetchCameras')
   }
 }
 </script>

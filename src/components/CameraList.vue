@@ -20,7 +20,6 @@
 import CameraCard from './CameraCard.vue'
 
 export default {
-  props: ['cameras'],
   components: {
     CameraCard
   }
