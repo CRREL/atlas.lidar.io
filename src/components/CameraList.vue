@@ -10,8 +10,8 @@
     </b-card-group>
     <b-card-group deck>
       <camera-card id="HEL_DUAL"></camera-card>
-      <camera-card id="HEL_BERGCAM1"></camera-card>
       <camera-card id="HEL_BERGCAM2"></camera-card>
+      <camera-card id="HEL_BERGCAM1"></camera-card>
     </b-card-group>
   </div>
 </template>
