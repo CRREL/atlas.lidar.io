@@ -6,14 +6,11 @@
       {{ camera.description }}
     </p>
 
-    <b-row>
-      <b-col>
-        This image was taken {{ camera.latest_image.datetime | moment("from") }}.
-      </b-col>
-
-      <b-col>
-        <b-img :src="camera.latest_image.url" fluid />
-      </b-col>
+    <b-row v-if="camera.is_dual">
+      Dual camera
+    </b-row>
+    <b-row v-else>
+      Not a dual camera
     </b-row>
   </div>
 

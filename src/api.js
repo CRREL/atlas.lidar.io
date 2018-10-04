@@ -1,13 +1,7 @@
 import axios from 'axios'
 
 const resource = function (path) {
-  let baseUrl
-  if (process.env.NODE_ENV === 'production') {
-    baseUrl = 'http://api.glac.io'
-  } else {
-    baseUrl = 'http://api-dev.glac.io'
-  }
-  return baseUrl + '/' + path
+  return process.env.VUE_APP_API_URL + '/' + path
 }
 
 const cameras = function (callback) {
