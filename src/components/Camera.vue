@@ -6,22 +6,25 @@
       {{ camera.description }}
     </p>
 
-    <b-row v-if="camera.is_dual">
-      Dual camera
-    </b-row>
-    <b-row v-else>
-      Not a dual camera
-    </b-row>
+    <camera-dual v-if="camera.is_dual" />
+    <camera-single v-else />
   </div>
 
   <div class="camera" v-else>
-    Loading {{ camera.id }}...
+    Loading {{ id }}...
   </div>
 </template>
 
 <script>
+import CameraDual from './CameraDual.vue'
+import CameraSingle from './CameraSingle.vue'
+
 export default {
   props: ['id'],
+  components: {
+    CameraDual,
+    CameraSingle
+  },
   computed: {
     camera () {
       return this.$store.getters.camera(this.id)
