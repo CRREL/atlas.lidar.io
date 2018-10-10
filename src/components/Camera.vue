@@ -36,7 +36,7 @@ export default {
     this.fetchImages()
   },
   watch: {
-    id: function (newId, oldId) {
+    id: function (_newId, _oldId) {
       this.images = null
       this.fetchImages()
     }
