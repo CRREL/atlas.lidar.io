@@ -6,12 +6,6 @@
     {{ camera.description }}
     </p>
 
-    <b-row>
-      <b-col offset="3" cols="6">
-        <b-img :src="camera.latest_image.url" fluid />
-      </b-col>
-    </b-row>
-
     <image-picker v-if="images" :tree="images">
     </image-picker>
   </div>
