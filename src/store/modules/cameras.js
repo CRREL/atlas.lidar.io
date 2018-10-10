@@ -12,8 +12,8 @@ const getters = {
 
 const actions = {
   fetchCameras ({ commit }) {
-    api.cameras(cameras => {
-      commit('setCameras', cameras)
+    api.cameras().then(response => {
+      commit('setCameras', response.data)
     })
   }
 }

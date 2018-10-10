@@ -5,15 +5,11 @@ const resource = function (path) {
 }
 
 const cameras = function (callback) {
-  axios
-    .get(resource('cameras'))
-    .then(response => callback(response.data))
+  return axios.get(resource('cameras'))
 }
 
 const cameraImages = function (id, callback) {
-  axios
-    .get(resource('camera/' + id + '/images'))
-    .then(response => callback(response.data))
+  return axios.get(resource('cameras/' + id + '/images'))
 }
 
 export default {
