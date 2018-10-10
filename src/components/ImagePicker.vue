@@ -1,7 +1,7 @@
 <template>
   <div class="image-picker">
     <b-row>
-      <b-col cols="2">
+      <b-col md="2" sm="6">
         <h4>Years</h4>
         <b-nav vertical pills>
           <b-nav-item
@@ -15,7 +15,7 @@
         </b-nav>
       </b-col>
 
-      <b-col cols="2">
+      <b-col md="2" sm="6">
         <h4>Months</h4>
         <b-nav vertical pills v-if="months">
           <b-nav-item
@@ -37,25 +37,34 @@
           <b-row
             v-for="day in days"
             :key="day.day"
-            align-v="center"
-            class="my-2"
+            no-gutters
             >
-            <b-col cols="2">
+            <b-col cols="1" class="m-1">
               <p>{{ new Date(1986, activeMonth, day.day) | moment("MMM DD") }}</p>
             </b-col>
             <b-col
               v-for="image in day.images"
               :key="image.datetime"
+              class="m-1"
               >
-              <b-img-lazy thumbnail fluid :src="image.url" />
+              <span v-b-modal="image.datetime">
+                <b-img-lazy fluid :src="image.url" />
+              </span>
+
+              <b-modal
+                :id="image.datetime"
+                :title="new Date(image.datetime) | moment('LLLL')"
+                size="lg"
+                lazy
+                ok-only
+                >
+                <b-img fluid :src="image.url" />
+              </b-modal>
             </b-col>
           </b-row>
         </div>
         <p class="text-muted" v-else-if="months">
           Choose a month...
-        </p>
-        <p class="text-muted" v-else>
-          Choose a year...
         </p>
       </b-col>
     </b-row>
