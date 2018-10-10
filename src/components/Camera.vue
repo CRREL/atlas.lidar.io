@@ -6,7 +6,7 @@
       {{ camera.description }}
     </p>
 
-    <camera-dual v-if="camera.is_dual" :camera="camera" />
+    <camera-dual v-if="camera.is_dual" />
     <camera-single v-else :camera="camera" />
   </div>
 

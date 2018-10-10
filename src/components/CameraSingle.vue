@@ -8,11 +8,20 @@
         </p>
       </b-col>
     </b-row>
+
+    <div v-if="images">
+      Images here
+    </div>
   </div>
 </template>
 
 <script>
+import api from '../api'
+
 export default {
-  props: ['camera']
+  props: ['camera', 'images'],
+  mounted () {
+    api.cameraImages(this.camera.id, images => { this.images = images })
+  }
 }
 </script>

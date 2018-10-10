@@ -10,6 +10,13 @@ const cameras = function (callback) {
     .then(response => callback(response.data))
 }
 
+const cameraImages = function (id, callback) {
+  axios
+    .get(resource('camera/' + id + '/images'))
+    .then(response => callback(response.data))
+}
+
 export default {
-  cameras
+  cameras,
+  cameraImages
 }
