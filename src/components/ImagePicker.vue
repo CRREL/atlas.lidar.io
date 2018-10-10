@@ -106,7 +106,9 @@ export default {
   methods: {
     setActiveYear (year) {
       this.activeYear = year
-      this.activeMonth = null
+      if (!this.tree[this.activeYear][this.activeMonth]) {
+        this.activeMonth = null
+      }
     },
     setActiveMonth (month) {
       this.activeMonth = month
