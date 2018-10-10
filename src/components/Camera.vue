@@ -41,7 +41,7 @@ export default {
         const date = new Date(image.datetime)
         const year = date.getFullYear()
         const month = date.getMonth()
-        const day = date.getDay()
+        const day = date.getDate()
         if (!tree[year]) {
           tree[year] = {}
         }
